@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E se 372 trades não chegam? Estudo de caso de auditoria</title>
+<meta name="description" content="O que uma auditoria estatística mostra quando o intervalo de confiança da expectância inclui zero.">
+<style>
+:root{
+  --paper:#f7f8f6; --ink:#14282d; --muted:#4c5f63; --line:#cfd8d6; --band:#e4ecea; --zero:#b4531a;
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--sans)}
+.wrap{max-width:46rem;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+h1{font:600 clamp(1.8rem,5vw,2.6rem)/1.15 var(--serif);margin:0 0 .75rem}
+h2{font:600 1.5rem/1.25 var(--serif);margin:2.5rem 0 .6rem;padding-top:1.25rem;border-top:1px solid var(--line)}
+p,li{max-width:42rem}
+.lead{font-size:1.1875rem;color:var(--muted)}
+.warn{border-left:4px solid var(--zero);background:#fff;padding:.4rem 1rem;margin:1.25rem 0;font-size:.97rem}
+.ph{background:#fff1d6;padding:0 .2rem}
+.fig{border:1px dashed #8ea0a2;background:#fff;padding:1.5rem 1rem;text-align:center;color:var(--muted);margin:1rem 0;font-size:.95rem}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:.75rem 0}
+th,td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}
+th{background:var(--band)}
+.scroll{overflow-x:auto}
+a{color:var(--ink)}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--zero);outline-offset:2px}
+.btn{display:inline-block;background:var(--ink);color:var(--paper);padding:.75rem 1.3rem;font-weight:600;text-decoration:none}
+footer{margin-top:3rem;padding-top:1.25rem;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav style="background:#e4ecea;padding:.65rem 1.25rem;border-bottom:1px solid #cfd8d6;font-size:.92rem"><div style="max-width:62rem;margin:0 auto;display:flex;gap:1.25rem;flex-wrap:wrap"><a href="index.html" style="color:#14282d;font-weight:600;text-decoration:none">Auditoria Gratuita</a><a href="estudo_de_caso.html" style="color:#14282d;text-decoration:none">Estudo de Caso</a><a href="ficha01_donchian_h4.html" style="color:#14282d;text-decoration:none">Ficha 01 &amp; Licao 1</a><a href="catalogo_estrategias.html" style="color:#14282d;text-decoration:none">Catalogo 10 Familias</a> <a href="privacidade.html" style="color:#14282d;text-decoration:none">Privacidade</a></div></nav>
+<div class="wrap">
+<p><a href="landing_beta_auditor.html">Auditoria gratuita de trades</a></p>
+
+<h1>E se 372 trades não chegam? O que uma auditoria mostra quando o intervalo inclui zero</h1>
+<p class="lead">Uma auditoria estatística a um backtest de seguimento de tendência em cripto. O que interessa aqui é o método e o que os dados mostram, não o desempenho.</p>
+
+<div class="warn"><strong>Aviso.</strong> Tudo nesta página vem de um backtest, não de uma conta real. Resultados de backtests não garantem resultados futuros. Não é aconselhamento financeiro nem recomendação de investimento.</div>
+
+
+<h2>Ponto de partida</h2>
+<p>Um sistema de seguimento de tendência em cripto (velas de 4 horas), testado de janeiro de 2024 a novembro de 2026, com 435 trades. Os números abaixo partem de 10.000 $ de capital inicial simulado.</p>
+
+<h2>Bruto contra líquido</h2>
+<p>O resultado bruto é de 9.230 $. Depois de swaps, fica em 6.073 $, cerca de 34% menos. Olhar só para o bruto dá uma imagem mais favorável do que a que o sistema teria tido.</p>
+<figure style="margin:1rem 0"><img src="fig1_bruto_liquido.svg" alt="Curva acumulada"></figure>
+
+<h2>Dependência de poucos trades</h2>
+<p>Nos 28 meses a partir de julho de 2024 (372 trades), a carteira que aceita todos os sinais ganha cerca de +51,9%. Se removermos os 2 maiores ganhos, passa a cerca de -2,1% (fator de lucro 0,99). Dois trades pesam mais do que a diferença entre ganhar e perder.</p>
+<figure style="margin:1rem 0"><img src="fig2_top2.svg" alt="Sem Top 2"></figure>
+
+<h2>Incerteza</h2>
+<p>A expectância média é de +13,95 $ por trade. O intervalo de confiança de 95%, calculado por blocos de 12 trades, vai de -12,99 $ a +51,73 $. <strong>O intervalo inclui zero</strong>, por isso esta amostra não permite distinguir a vantagem do acaso.</p>
+<p>Com a mesma média e dispersão, seriam precisos cerca de 2.000 trades para o intervalo deixar de incluir zero. Ao ritmo desta estratégia, isso são vários anos de dados reais.</p>
+<figure style="margin:1rem 0"><img src="fig3_bootstrap.svg" alt="Bootstrap"></figure>
+
+<h2>Regras de risco</h2>
+<p>Comparámos tetos para o risco aberto total, nos 28 meses a partir de julho de 2024:</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Teto de risco aberto</th><th>Retorno</th><th>Fator de lucro</th><th>Janelas de 56 dias com drawdown de 8,5% ou mais</th><th>Retorno sem os 2 maiores ganhos</th></tr></thead>
+<tbody>
+<tr><td>1,0% (máx. 2 posições)</td><td>+11,0%</td><td>1,16</td><td>0,0%</td><td>+3,3% (fator 1,05)</td></tr>
+<tr><td>1,5% (máx. 3)</td><td>+42,7%</td><td>1,41</td><td>1,1%</td><td>-0,6% (fator 0,99)</td></tr>
+<tr><td>2,0% (máx. 4)</td><td>+51,5%</td><td>1,41</td><td>3,4%</td><td>-3,2% (fator 0,98)</td></tr>
+<tr><td>Sem teto</td><td>+51,9%</td><td>1,37</td><td>7,5%</td><td>-2,1% (fator 0,99)</td></tr>
+</tbody>
+</table>
+</div>
+<p>Mais risco aberto rende mais e aumenta as quedas. Nenhuma destas escolhas é um vencedor estatístico: é uma decisão de apetite ao risco. O teto mais baixo é também o que depende menos dos 2 maiores ganhos, mas ainda assim rende pouco.</p>
+
+<h2>Cenário de desafio de prop firm</h2>
+<p>Simulámos um desafio de duas fases (objetivos de +10% e +5%, drawdown estático de 10%) em blocos de 12 trades, com um horizonte de 24 meses, contra uma linha de base sem vantagem (retornos centrados em média zero).</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Cenário</th><th>Conversão até conta financiada</th><th>Sem payout em 24 meses</th><th>Prejuízo no ano 2</th></tr></thead>
+<tbody>
+<tr><td>Linha de base sem vantagem (média zero)</td><td>18,9% a 19,2%</td><td>72,4% a 73,0%</td><td>44,0% a 46,8%</td></tr>
+<tr><td>Backtest, teto 1,0% e máx. 2 posições, amostra completa (226 trades)</td><td>50,6%</td><td>42,1%</td><td>18,1%</td></tr>
+<tr><td>Backtest, teto 1,0% e máx. 2 posições, desde julho de 2024 (189 trades)</td><td>39,4%</td><td>52,2%</td><td>24,2%</td></tr>
+<tr><td>Backtest sem os 2 maiores ganhos</td><td>9,7% a 15,6%</td><td>82,0% a 86,2%</td><td>n/d</td></tr>
+<tr><td>Sem os 2 maiores ganhos, também centrado em zero</td><td>15,1%</td><td>n/d</td><td>n/d</td></tr>
+</tbody>
+</table>
+</div>
+<p>Como ler:</p>
+<ul>
+<li>A conversão de cerca de 19% na linha de base é menor do que a de uma passagem sem limite de tempo, porque aos 24 meses muitas contas ainda estão na primeira fase. A comparação válida é entre linhas, com o mesmo horizonte.</li>
+<li>O backtest fica acima da linha de base, mas isso descreve a amostra. Como o intervalo de confiança da expectância inclui zero, os resultados futuros podem ficar em qualquer ponto entre a linha de base e o backtest.</li>
+<li>Sem os 2 maiores ganhos, a conversão fica abaixo da linha de base. Isto é consistente com a ideia de que tirar esses trades reduz a volatilidade e torna mais lento chegar a +10% em 24 meses: a mesma série centrada em zero dá 15,1%, perto dos 9,7% a 15,6% sem centrar.</li>
+</ul>
+
+<h2>O que não concluímos</h2>
+<ul>
+<li>Que o sistema tem vantagem.</li>
+<li>Que vai passar um desafio de prop firm.</li>
+<li>Que alguém deve operá-lo.</li>
+</ul>
+
+<h2>Queres ver isto sobre os teus trades?</h2>
+<p>Estou a fazer 10 auditorias gratuitas a extratos do TradingView e do MT5 para perceber o que é útil. Não vendo sinais nem recomendações.</p>
+<p><a class="btn" href="landing_beta_auditor.html#pedir">Pedir auditoria gratuita</a></p>
+
+<footer>
+<p>Resultados de backtests e de contas passadas não garantem resultados futuros. Este conteúdo não constitui aconselhamento financeiro nem recomendação de investimento. Sem afiliação com nenhuma corretora nem prop firm.</p>
+<p><a href="privacidade.html">Política de Privacidade</a></p>
+</footer>
+</div>
+</body>
+</html>
