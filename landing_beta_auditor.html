@@ -132,5 +132,22 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);font-size:.9rem;colo
 </div>
 </footer>
 
-</body>
+<div style="background:#fff;border:2px solid #0f766e;border-radius:14px;padding:22px;margin:22px auto;max-width:860px;font-family:system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.06)">
+<h3 style="margin:0 0 8px;color:#14282d">Experimenta Agora: O Teu Resultado e Metodo ou Sorte?</h3>
+<p style="margin:0 0 14px;color:#334155;font-size:14px">Mexe nos valores abaixo para veres o que acontece a maioria das contas antes de uma auditoria real:</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px">
+  <div><label style="font-size:13px;font-weight:700">Lucro mostrado (+&euro;): <span id="hv1">1200</span>&euro;</label><input type="range" id="hr1" min="200" max="5000" step="100" value="1200" style="width:100%"></div>
+  <div><label style="font-size:13px;font-weight:700">Total de trades: <span id="hv2">180</span></label><input type="range" id="hr2" min="20" max="600" step="10" value="180" style="width:100%"></div>
+  <div><label style="font-size:13px;font-weight:700">2 melhores trades (&euro;): <span id="hv3">950</span>&euro;</label><input type="range" id="hr3" min="0" max="3000" step="50" value="950" style="width:100%"></div>
+</div>
+<div id="hres" style="background:#0f1d21;color:#fff;padding:14px;border-radius:10px;font-size:14px"></div>
+<script>
+function uh(){
+  const g=+hr1.value,n=+hr2.value,t2=+hr3.value;
+  hv1.textContent=g;hv2.textContent=n;hv3.textContent=t2;
+  const taxas=n*3.5,real=g-taxas-t2;
+  hres.innerHTML=`Taxas estimadas (${n} trades): <strong style="color:#fca5a1">-${Math.round(taxas)}&euro;</strong> | Sem os 2 dias de sorte: <strong style="color:${real>0?'#6ee7b7':'#fca5a5'}">${Math.round(real)}&euro;</strong> &rarr; <strong>${real>0?'Passa no teste basico!':'Prejuizo real (dependia de sorte e taxas).'}</strong>`;
+}
+['hr1','hr2','hr3'].forEach(i=>document.getElementById(i).oninput=uh);uh();
+</script></div></body>
 </html>
