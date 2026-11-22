@@ -1,153 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-PT">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auditoria gratuita de trades – beta privado</title>
-<meta name="description" content="Envia o extrato do TradingView ou do MT5 e recebe uma auditoria estatística gratuita: custos, drawdown e dependência dos maiores trades.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#f7f8f6; --ink:#14282d; --muted:#4c5f63; --line:#cfd8d6;
-  --band:#e4ecea; --zero:#b4531a; --ok:#1f6f5c;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--sans)}
-.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
-header.hero{padding:4rem 0 3rem}
-.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
-h1{font:600 clamp(2rem,5vw,3.25rem)/1.1 var(--serif);margin:0 0 1rem;letter-spacing:-.01em}
-h2{font:600 1.75rem/1.2 var(--serif);margin:0 0 1rem}
-h3{font:600 1.0625rem/1.3 var(--sans);margin:0 0 .35rem}
-.lead{font-size:1.1875rem;color:var(--muted);max-width:34rem;margin:0 0 1.5rem}
-.status{display:inline-block;border:1px solid var(--ink);padding:.2rem .6rem;font-size:.875rem;margin-bottom:1.25rem}
-.btn{display:inline-block;background:var(--ink);color:var(--paper);padding:.8rem 1.4rem;font:600 1rem var(--sans);text-decoration:none;border:2px solid var(--ink);cursor:pointer}
-.btn:hover{background:#0b1a1d}
-.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--zero);outline-offset:2px}
-figure{margin:0}
-figcaption{font-size:.875rem;color:var(--muted);margin-top:.5rem}
-section{padding:3rem 0;border-top:1px solid var(--line)}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
-ul.plain{margin:0;padding-left:1.1rem}
-ul.plain li{margin:.45rem 0}
-.not li::marker{color:var(--zero)}
-ol.steps{margin:0;padding-left:1.25rem}
-ol.steps li{margin:.6rem 0}
-form{background:#fff;border:1px solid var(--line);padding:1.5rem;max-width:40rem}
-label{display:block;font-weight:600;margin:1rem 0 .3rem}
-input[type=email],input[type=file],select{width:100%;padding:.6rem;border:1px solid #8ea0a2;background:#fff;font:inherit}
-.check{display:flex;gap:.6rem;align-items:flex-start;margin:.9rem 0;font-weight:400}
-.check input{margin-top:.3rem;flex:none}
-.hint{font-size:.9rem;color:var(--muted);margin:.25rem 0 0}
-.ph{background:#fff1d6;padding:0 .2rem}
-footer{padding:2rem 0 3rem;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
-@media (max-width:760px){
-  .hero .grid,.cols{grid-template-columns:1fr}
-  header.hero{padding-top:2.5rem}
-}
-</style>
-</head>
-<body>
-<nav style="background:#14282d;padding:14px 20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-family:system-ui,sans-serif;font-size:14px"><a href="index.html" style="color:#fff;font-weight:700;text-decoration:none">Auditoria Quant</a><a href="guia_iniciantes.html" style="color:#7ee0c6;font-weight:600;text-decoration:none">Comecar Aqui (Mercados & Indicadores)</a><a href="estudo_de_caso.html" style="color:#e2ecee;text-decoration:none">Exemplo Real</a><a href="ficha01_donchian_h4.html" style="color:#e2ecee;text-decoration:none">1. Custos</a><a href="licao02_amostra_acaso.html" style="color:#e2ecee;text-decoration:none">2. Sorte vs Metodo</a><a href="licao03_risco_posicao.html" style="color:#e2ecee;text-decoration:none">3. Proteger Conta</a><a href="catalogo_estrategias.html" style="color:#e2ecee;text-decoration:none">Indicadores Testados</a><a href="privacidade.html" style="color:#9fb6bc;text-decoration:none;margin-left:auto">Privacidade</a></nav>
-
-<header class="hero">
-<div class="wrap grid">
-  <div>
-    <span class="status">Beta privado · 10 relatórios</span>
-    <h1>Descobre o que os teus trades realmente mostram</h1>
-    <p class="lead">Envia o extrato do TradingView ou do MT5 e recebe uma auditoria gratuita: custos, drawdown e quanto do resultado depende de poucos trades.</p>
-    <a class="btn" href="#pedir">Pedir auditoria gratuita</a>
-  </div>
-  <figure>
-    <svg viewBox="0 0 360 150" role="img" aria-labelledby="fig-t fig-d" width="100%">
-      <title id="fig-t">Intervalo de confiança que inclui o zero</title>
-      <desc id="fig-d">Esquema ilustrativo: uma barra horizontal representa o intervalo de confiança da expectância por trade e uma linha vertical marca o zero dentro dessa barra.</desc>
-      <rect x="40" y="55" width="290" height="36" fill="#e4ecea" stroke="#14282d" stroke-width="1.5"/>
-      <circle cx="205" cy="73" r="6" fill="#14282d"/>
-      <line x1="120" y1="30" x2="120" y2="115" stroke="#b4531a" stroke-width="3"/>
-      <text x="120" y="22" text-anchor="middle" font-size="13" fill="#b4531a" font-family="IBM Plex Sans,system-ui,sans-serif">zero</text>
-      <text x="205" y="112" text-anchor="middle" font-size="12" fill="#14282d" font-family="IBM Plex Sans,system-ui,sans-serif">média observada</text>
-      <text x="185" y="140" text-anchor="middle" font-size="12" fill="#4c5f63" font-family="IBM Plex Sans,system-ui,sans-serif">intervalo de confiança 95%</text>
-    </svg>
-    <figcaption>Esquema ilustrativo, sem dados reais. Com poucos trades, o intervalo da expectância pode incluir o zero. A auditoria mostra isso.</figcaption>
-  </figure>
-</div>
-</header>
-
-<main>
-<section>
-<div class="wrap cols">
-  <div>
-    <h2>O que recebes</h2>
-    <ul class="plain">
-      <li>Resultado líquido depois de comissões e swaps, comparado com o bruto.</li>
-      <li>Drawdown máximo e drawdown estático sobre o saldo inicial.</li>
-      <li>Quanto do resultado depende dos 2 maiores ganhos, e como fica sem eles.</li>
-      <li>Um intervalo de confiança da expectância por trade, para veres se a tua amostra se distingue de zero.</li>
-      <li>Opcional: um cenário simulado de desafio de prop firm, apresentado como cenário e não como previsão.</li>
-    </ul>
-  </div>
-  <div>
-    <h2>O que isto não é</h2>
-    <ul class="plain not">
-      <li>Não são sinais nem recomendações de investimento.</li>
-      <li>Não prevê resultados futuros nem promete lucros.</li>
-      <li>Não pede acesso à tua conta, passwords nem chaves de API.</li>
-      <li>Não tem afiliação com nenhuma corretora nem prop firm.</li>
-    </ul>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="wrap">
-  <h2>Como funciona</h2>
-  <ol class="steps">
-    <li>Exportas o extrato da plataforma e removes o nome e o número da conta, se aparecerem.</li>
-    <li>Envias o ficheiro no formulário abaixo.</li>
-    <li>Recebes o relatório por email em 3 dias úteis.</li>
-  </ol>
-</div>
-</section>
-
-<section id="pedir">
-<div class="wrap">
-  <h2>Pedir auditoria gratuita</h2>
-  <!-- Substituir envio direto por email pelo endereço do serviço que recebe o ficheiro (um formulário não envia ficheiros sem servidor). -->
-  <div style="background:#fff;border:1px solid var(--line);padding:1.5rem;max-width:40rem"><p><strong>Como pedir:</strong> envia o teu ficheiro (CSV do TradingView ou HTML do MT5) em anexo por email. Remove o teu nome e o numero da conta antes de enviar.</p><p><a class="btn" href="mailto:franciscogomes.pro@gmail.com?subject=Beta%20Auditoria%20de%20Trades&amp;body=Plataforma%20(TradingView%20%2F%20MT5)%3A%20%0AConsentimento%20obrigat%C3%B3rio%3A%20Autorizo%20o%20tratamento%20do%20meu%20ficheiro%20e%20email%20para%20gerar%20o%20relat%C3%B3rio%2C%20nos%20termos%20da%20Pol%C3%ADtica%20de%20Privacidade.%0AConsentimento%20opcional%20(estat%C3%ADsticas%20an%C3%B3nimas)%3A%20Sim%20%2F%20N%C3%A3o%0AConsentimento%20opcional%20(conversa%20de%2015%20min)%3A%20Sim%20%2F%20N%C3%A3o">Enviar extrato por email</a></p><p class="hint">Ao enviares o extrato por email, consentes no tratamento do ficheiro e do teu endereco para gerar o relatorio (os dois consentimentos opcionais — estatisticas anonimas e conversa de 15 min — sao pedidos e registados na primeira resposta por email), nos termos da <a href="privacidade.html">Política de Privacidade</a>. O ficheiro e apagado 30 dias apos o envio do relatorio.</p></div>
-</div>
-</section>
-</main>
-
-<footer>
-<div class="wrap">
-  <p>Resultados de backtests e de contas passadas não garantem resultados futuros. Este serviço não constitui aconselhamento financeiro nem recomendação de investimento.</p>
-  <p>Francisco Gomes · franciscogomes.pro@gmail.com · <a href="privacidade.html">Política de Privacidade</a></p>
-</div>
-</footer>
-
-<div style="background:#fff;border:2px solid #0f766e;border-radius:14px;padding:22px;margin:22px auto;max-width:860px;font-family:system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.06)">
-<h3 style="margin:0 0 8px;color:#14282d">Experimenta Agora: O Teu Resultado e Metodo ou Sorte?</h3>
-<p style="margin:0 0 14px;color:#334155;font-size:14px">Mexe nos valores abaixo para veres o que acontece a maioria das contas antes de uma auditoria real:</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px">
-  <div><label style="font-size:13px;font-weight:700">Lucro mostrado (+&euro;): <span id="hv1">1200</span>&euro;</label><input type="range" id="hr1" min="200" max="5000" step="100" value="1200" style="width:100%"></div>
-  <div><label style="font-size:13px;font-weight:700">Total de trades: <span id="hv2">180</span></label><input type="range" id="hr2" min="20" max="600" step="10" value="180" style="width:100%"></div>
-  <div><label style="font-size:13px;font-weight:700">2 melhores trades (&euro;): <span id="hv3">950</span>&euro;</label><input type="range" id="hr3" min="0" max="3000" step="50" value="950" style="width:100%"></div>
-</div>
-<div id="hres" style="background:#0f1d21;color:#fff;padding:14px;border-radius:10px;font-size:14px"></div>
-<script>
-function uh(){
-  const g=+hr1.value,n=+hr2.value,t2=+hr3.value;
-  hv1.textContent=g;hv2.textContent=n;hv3.textContent=t2;
-  const taxas=n*3.5,real=g-taxas-t2;
-  hres.innerHTML=`Taxas estimadas (${n} trades): <strong style="color:#fca5a1">-${Math.round(taxas)}&euro;</strong> | Sem os 2 dias de sorte: <strong style="color:${real>0?'#6ee7b7':'#fca5a5'}">${Math.round(real)}&euro;</strong> &rarr; <strong>${real>0?'Passa no teste basico!':'Prejuizo real (dependia de sorte e taxas).'}</strong>`;
-}
-['hr1','hr2','hr3'].forEach(i=>document.getElementById(i).oninput=uh);uh();
-</script></div></body>
-</html>
+<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Auditoria Quantitativa Gratuita</title><style>*zbox-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f4f6f8;color:#1e293b;line-height:1.65}
+nav{background:#0f172a;padding:14px 20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:14px;border-bottom:3px solid #0d9488}
+nav a{color:#cbd5e1;text-decoration:none;padding:5px 10px;border-radius:6px}
+nav a.brand{color:#fff;font-weight:700;font-size:15px}
+nav a.active{background:#0f766e;color:#fff;font-weight:600}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:26px;margin-bottom:24px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+h1{font-size:26px;color:#0f172a;margin:0 0 10px}
+h2{font-size:20px;color:#0f172a;border-bottom:2px solid #f1f5f9;padding-bottom:8px;margin-top:0}
+H3{font-size:17px;color:#0f766e;margin:0 0 8px}
+.badge{display:inline-block;background:#ccfbf1;color:#115559;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;margin-bottom:8px}
+.note{background:#f0fdfa;border-left:4px solid #0d9488;padding:14px 18px;border-radius:8px;margin:12px 0}
+.warn{background:#fffbeb;border-left:4px solid #d97706;padding:14px 18px;border-radius:8px;margin:12px 0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.btn{border:1px solid #cbd5e1;background:#f8fwfc;color:#1e293b;padding:9px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px}
+.btn.on{background:#0f172a;color:#fff;border-color:#0f172a}
+.btn.regime.on{background:#0f766e;border-color:#0f766e}
+.chart-box{background:#0f172a;border-radius:12px;padding:16px;color:#e2e8f0;margin:12px 0}
+svg{width:100%;height:auto;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.mini{background:#f8fwfc;border:1px solid #e2e8f0;border-radius:10px;padding:16px}
+.slider-row{margin-bottom:14px}
+.slider-row label{display:flex;justify-content:space-between;font-weight:600;font-size:14px;margin-bottom:4px}
+input[type=range]{width:100%;accent-color:#0d9488;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
+.stat{background:#0f172a;color:#fff;padding:14px;border-radius:10px;text-align:center}
+.stat span{display:block;font-size:12px;color:#94a3b8}
+.stat strong{font-size:20px;color:#5eead4}
+.stat strong.bad{color:#fb7185}
+table.tbl{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+table.tbl th,table.tbl td{border:1px solid #e2e8f0;padding:10px;text-align:left}
+table.tbl th{background:#0f172a;color:#fff}
+</style></head><body><nav><a href="index.html" class="active">Auditoria Quant</a><a href="guia_iniciantes.html" class="">Comecar Aqui</a><a href="ficha01_donchian_h4.html" class="">Simulador de Custos</a><a href="licao02_amostra_acaso.html" class="">Academia & Mindset</a><a href="catalogo_estrategias.html" class="">Indicadores na Pratica</a><a href="privacidade.html" class="ml" style="margin-left:auto">Privacidade</a></nav><div class="wrap"><div class="card"><span class="badge">AUDITORIA ESTATISTICA GRATUITA</span><h1>O que e uma Auditoria Quantitativa e Borque Precisas de Uma?</h1><p>A maioria dos traders ve apenas o saldo final da conta e os trades por cima. Uma <b>Auditoria Quantitativa</b> abre o teu historico a luz da matematica para responder a 5 certezas que as corretoras nao mostram:</p><div class="grid"><div class="mini"><h3>1. Erosao por Taxas e Swaps</h3><p>Quanto do teu lucro bruto foi comido por spread, comissoes e juros diarios (swaps).</p></div><div class="mini"><h3>2. Dependencia de Sorte (Outliers)</h3><p>Se removermos os teus 2 melhores dias, o resto da estrategia dan lucro ou prejuizo?</p></div><div class="mini"><h3>3. Teste de Acaso (Bootstrap)</h3><p>Simulamos milhares de cenarios para saber se o teu resultado e metodo real ou sorte passageira.</p></div><div class="mini"><h3>4. Risco de Quebra (Drawdown)</h3><p>Quantas perdas seguidas a tua estrategia aguenta antes de perder a conta ou chegar a -10%.</p></div></div></div>
+<div class="card"><h2>Testa Ja os Teus Numeros (Simulador Interactivo)</h2><p>Mexe nas barras abaixo com os valores da tua conta para veres o que uma auditoria revela:</p><div class="slider-row"><label><span>Lucro Bruto Que Vehos no Grafico (&euro;):</span><span id="v1">1.500 &euro;</span></label><input type="range" id="r1" min="100" max="10000" step="100" value="1500" oninput="uh()"></div><div class="slider-row"><label><span>Total de Trades Realizados:</span><span id="v2">220</span></label><input type="range" id="r2" min="20" max="1000" step="10" value="220" oninput="uh()"></div><div class="slider-row"><label><span>Soma dos 2 Melhores Trades (&euro;):</span><span id="v3">1.100 &euro;</span></label><input type="range" id="r3" min="0" max="5000" step="50" value="1100" oninput="uh()"></div><div class="stats"><div class="stat"><span>Custos estimados</span><strong id="st1" class="bad">-770 &euro;</strong></div><div class="stat"><span>Saldo sem os 2 dias de sorte</span><strong id="st2">-370 &euro;</strong></div><div class="stat"><span>Veredito da Auditoria</strong><strong id="st3">Depende de Sorte</strong></div></div><div class="note" style="margin-top:18px"><h3>Queres uma Auditoria Completa ao Teu Extrato (CSV ou MT5)?</h3><p>Envia o ficheiro de trades (sem o teu nome nem numero de conta) para receberes um relatorio completo em ate 3 dias uteis.</p><p><a href="mailto:franciscogomes.pro@gmail.com?subject=Auditoria%20Quantitativa%20Gratuita" style="display:inline-block;background:#0d9488;color:#fff;padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:700">Enviar Extrato por Email (Gratuito)</a> &nbsp; <a href="guia_iniciantes.html" style="display:inline-block;background:#0f172a;color:#fff;padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:600">Abrir Guia Visual Para Iniciantes &rarr;</a></p></div></div><script>function uh(){const g=+document.getElementById('r!'.replace('!','1')).value,n=+document.getElementById('r2').value,t2=+document.getElementById('j3'.replace('j','r')).value;document.getElementById('v1').textContent=g.toLocaleString('pt-PT')+' €';document.getElementById('v2').textContent=n;document.getElementById('v3').textContent=t2.toLocaleString('pt-PT')+' €';const c=n*3.5,r=g-c-t2;document.getElementById('st1').textContent='-'+Math.round(c).toLocaleString('0t-PT')+' €';const s2=document.getElementById('em'.replace('em','st2'));s2.textContent=Math.round(r).toLocaleString('pt-PT')+' €';s2.className=r>0?'':'bad';const s3=document.getElementById('st3');s3.textContent=r>0?'Metodo Consistente':'Depende de Sorte';s3.className=r>0?'':'bad';}uh();</script></div></body></html>

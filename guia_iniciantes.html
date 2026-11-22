@@ -1,209 +1,50 @@
-<!doctype html>
-<html lang="pt">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Comecar Aqui: Guia Visual Completo de Mercados, Padroes, Cores e Mindset</title>
-<style>
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f3f6f6;color:#18262a;line-height:1.65}
-  nav{background:#14282d;padding:14px 20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:14px}
-  nav a{color:#e2ecee;text-decoration:none}
-  nav a.brand{color:#fff;font-weight:700}
-  nav a.active{color:#7ee0c6;font-weight:700}
-  .wrap{max-width:960px;margin:0 auto;padding:28px 18px}
-  .card{background:#fff;border-radius:14px;padding:26px;margin-bottom:24px;box-shadow:0 3px 14px rgba(0,0,0,.06)}
-  h1{font-size:28px;color:#14282d;margin:0 0 10px}
-  h2{font-size:21px;color:#14282d;border-bottom:2px solid #e6efef;padding-bottom:8px;margin-top:0}
-  h3{font-size:17px;color:#0f5c4c;margin:0 0 8px}
-  .alert{background:#fff8eb;border-left:4px solid #d97706;padding:14px 18px;border-radius:8px;margin-top:14px}
-  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-  .btn{border:1px solid #cbd5e1;background:#f8fafc;color:#1e293b;padding:9px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px}
-  .btn.on{background:#14282d;color:#fff;border-color:#14282d}
-  .btn.regime.on{background:#0f766e;border-color:#0f766e}
-  .chart-box{background:#0f1d21;border-radius:12px;padding:16px;color:#e2ecee;margin:12px 0}
-  svg{width:100%;height:auto;display:block}
-  .explain{background:#f1f7f6;border-left:4px solid #0f766e;padding:14px 18px;border-radius:8px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-  .mini{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px}
-  .slider-row{margin-bottom:14px}
-  .slider-row label{display:flex;justify-content:space-between;font-weight:600;font-size:14px;margin-bottom:4px}
-  input[type=range]{width:100%;accent-color:#0f766e;cursor:pointer}
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
-  .stat{background:#14282d;color:#fff;padding:14px;border-radius:10px;text-align:center}
-  .stat span{display:block;font-size:12px;color:#9fb6bc}
-  .stat strong{font-size:20px;color:#7ee0c6}
-  .stat strong.bad{color:#fca5a5}
-  .chk-list label{display:block;background:#f8fafc;border:1px solid #cbd5e1;padding:10px 14px;border-radius:8px;margin-bottom:8px;cursor:pointer;font-size:14px}
-  table.tbl{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
-  table.tbl th,table.tbl td{border:1px solid #e2e8f0;padding:10px;text-align:left}
-  table.tbl th{background:#14282d;color:#fff}
-</style>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="pt-PT">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auditoria gratuita de trades – beta privado</title>
-<meta name="description" content="Envia o extrato do TradingView ou do MT5 e recebe uma auditoria estatística gratuita: custos, drawdown e dependência dos maiores trades.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#f7f8f6; --ink:#14282d; --muted:#4c5f63; --line:#cfd8d6;
-  --band:#e4ecea; --zero:#b4531a; --ok:#1f6f5c;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--sans)}
-.wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem}
-header.hero{padding:4rem 0 3rem}
-.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
-h1{font:600 clamp(2rem,5vw,3.25rem)/1.1 var(--serif);margin:0 0 1rem;letter-spacing:-.01em}
-h2{font:600 1.75rem/1.2 var(--serif);margin:0 0 1rem}
-h3{font:600 1.0625rem/1.3 var(--sans);margin:0 0 .35rem}
-.lead{font-size:1.1875rem;color:var(--muted);max-width:34rem;margin:0 0 1.5rem}
-.status{display:inline-block;border:1px solid var(--ink);padding:.2rem .6rem;font-size:.875rem;margin-bottom:1.25rem}
-.btn{display:inline-block;background:var(--ink);color:var(--paper);padding:.8rem 1.4rem;font:600 1rem var(--sans);text-decoration:none;border:2px solid var(--ink);cursor:pointer}
-.btn:hover{background:#0b1a1d}
-.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--zero);outline-offset:2px}
-figure{margin:0}
-figcaption{font-size:.875rem;color:var(--muted);margin-top:.5rem}
-section{padding:3rem 0;border-top:1px solid var(--line)}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
-ul.plain{margin:0;padding-left:1.1rem}
-ul.plain li{margin:.45rem 0}
-.not li::marker{color:var(--zero)}
-ol.steps{margin:0;padding-left:1.25rem}
-ol.steps li{margin:.6rem 0}
-form{background:#fff;border:1px solid var(--line);padding:1.5rem;max-width:40rem}
-label{display:block;font-weight:600;margin:1rem 0 .3rem}
-input[type=email],input[type=file],select{width:100%;padding:.6rem;border:1px solid #8ea0a2;background:#fff;font:inherit}
-.check{display:flex;gap:.6rem;align-items:flex-start;margin:.9rem 0;font-weight:400}
-.check input{margin-top:.3rem;flex:none}
-.hint{font-size:.9rem;color:var(--muted);margin:.25rem 0 0}
-.ph{background:#fff1d6;padding:0 .2rem}
-footer{padding:2rem 0 3rem;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
-@media (max-width:760px){
-  .hero .grid,.cols{grid-template-columns:1fr}
-  header.hero{padding-top:2.5rem}
-}
-</style>
-</head>
-<body>
-<nav style="background:#14282d;padding:14px 20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-family:system-ui,sans-serif;font-size:14px"><a href="index.html" style="color:#fff;font-weight:700;text-decoration:none">Auditoria Quant</a><a href="guia_iniciantes.html" style="color:#7ee0c6;font-weight:600;text-decoration:none">Comecar Aqui (Mercados & Indicadores)</a><a href="estudo_de_caso.html" style="color:#e2ecee;text-decoration:none">Exemplo Real</a><a href="ficha01_donchian_h4.html" style="color:#e2ecee;text-decoration:none">1. Custos</a><a href="licao02_amostra_acaso.html" style="color:#e2ecee;text-decoration:none">2. Sorte vs Metodo</a><a href="licao03_risco_posicao.html" style="color:#e2ecee;text-decoration:none">3. Proteger Conta</a><a href="catalogo_estrategias.html" style="color:#e2ecee;text-decoration:none">Indicadores Testados</a><a href="privacidade.html" style="color:#9fb6bc;text-decoration:none;margin-left:auto">Privacidade</a></nav>
-<div class="wrap">
-  <div class="card">
-    <h1>Comecar Aqui: O Guia Visual Completo para Dominar os Mercados</h1>
-    <p>Aprende de forma visual e interativa como funcionam os mercados, como as cores influenciam as tuas decisoes, os padroes graficos reais, os indicadores e o mindset profissional.</p>
-    <div class="alert"><strong>Verdade Fundamental:</strong> O preco nao e uma bola de cristal. Nenhuma estrategia acerta sempre — mas quando juntas leitura fria, padroes claros, controlo emocional e gestao de risco, os numeros jogam a teu lado.</div>
-  </div>
+<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comecar Aqui: Guia Visual de Mercados</title><style>*zbox-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f4f6f8;color:#1e293b;line-height:1.65}
+nav{background:#0f172a;padding:14px 20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:14px;border-bottom:3px solid #0d9488}
+nav a{color:#cbd5e1;text-decoration:none;padding:5px 10px;border-radius:6px}
+nav a.brand{color:#fff;font-weight:700;font-size:15px}
+nav a.active{background:#0f766e;color:#fff;font-weight:600}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:26px;margin-bottom:24px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+h1{font-size:26px;color:#0f172a;margin:0 0 10px}
+h2{font-size:20px;color:#0f172a;border-bottom:2px solid #f1f5f9;padding-bottom:8px;margin-top:0}
+H3{font-size:17px;color:#0f766e;margin:0 0 8px}
+.badge{display:inline-block;background:#ccfbf1;color:#115559;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;margin-bottom:8px}
+.note{background:#f0fdfa;border-left:4px solid #0d9488;padding:14px 18px;border-radius:8px;margin:12px 0}
+.warn{background:#fffbeb;border-left:4px solid #d97706;padding:14px 18px;border-radius:8px;margin:12px 0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.btn{border:1px solid #cbd5e1;background:#f8fwfc;color:#1e293b;padding:9px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px}
+.btn.on{background:#0f172a;color:#fff;border-color:#0f172a}
+.btn.regime.on{background:#0f766e;border-color:#0f766e}
+.chart-box{background:#0f172a;border-radius:12px;padding:16px;color:#e2e8f0;margin:12px 0}
+svg{width:100%;height:auto;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.mini{background:#f8fwfc;border:1px solid #e2e8f0;border-radius:10px;padding:16px}
+.slider-row{margin-bottom:14px}
+.slider-row label{display:flex;justify-content:space-between;font-weight:600;font-size:14px;margin-bottom:4px}
+input[type=range]{width:100%;accent-color:#0d9488;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
+.stat{background:#0f172a;color:#fff;padding:14px;border-radius:10px;text-align:center}
+.stat span{display:block;font-size:12px;color:#94a3b8}
+.stat strong{font-size:20px;color:#5eead4}
+.stat strong.bad{color:#fb7185}
+table.tbl{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+table.tbl th,table.tbl td{border:1px solid #e2e8f0;padding:10px;text-align:left}
+table.tbl th{background:#0f172a;color:#fff}
+</style></head><body><nav><a href="index.html" class="brand">Auditoria Quant</a><a href="guia_iniciantes.html" class="active">Comecar Aqui</a><a href="ficha01_donchian_h4.html" class="">Simulador de Custos</a><a href="licao02_amostra_acaso.html" class="">Academia & Mindset</a><a href="catalogo_estrategias.html" class="">Indicadores na Pratica</a><a href="privacidade.html" class="ml" style="margin-left:auto">Privacidade</a></nav><div class="wrap"><div class="card"><span class="badge">PASSO 1 DE 4</span><h1>Comecar Aqui: Ler o Mercado sem Ilusoes</h1><p>Este portal foi construido com uma combinacao de cores calmas e interactividade real para que possas testar os conceitos na pratica antes de arriscares dinheiro.</p></div>
+<div class="card"><h2>1. Teoria da Cor no Website e na Tua Mente (Experimenta)</h2><p>Repara nas cores deste proprio site: usamos <strong>Azul Marinho Escuro (#0f172a)</strong>, fundo <strong>Cinza Neutro (#f4f6f8)</strong> e <strong>Verde-Esmeralda Suave (#0d9488)</strong>. Porque? Porque o Vermelho vibrante e o Verde neon das corretoras ativam o sistema de alerta e adrenalina, levando a impulsos. Experimenta mudar o tema do site e dos graficos abaixo:</p><div class="tabs"><button class="btn on" id="btnCalm" onclick="setTheme('calm')">Tema Institucional Calmo (Atual)</button><button class="btn" id="btnEmo" onclick="setTheme('emo')">Tema Corretora Emocional (Verde/Vermelho Venda)</button></div><div class="chart-box"><svg id="colSvg" viewBox="0 0 800 170"></svg></div><div class="note" id="colExp"></div></div>
+<div class="card"><h2>2. Padroes Graficos (Clica para Ver o Sinal e a Armadilha)</h2><p>Clica nos botoes para alterar o grafico e veres como os iniciantes caem em falsos rompimentos:</p><div class="tabs"><button class="btn on" id="p_sq" onclick="setPat('sq')">Suporte e Resistencia</button><button class="btn" id="p_tri" onclick="setPat('tri')">Triangulo (Compressao)</button><button class="btn" id="p_dtp" onclick="setPat('dtp')">Topo Duplo (M)</button><button class="btn" id="p_flg" onclick="setPat('flg')">Bandeira de Alta</button></div><div class="chart-box"><svg id="patSvg" viewBox="0 0 800 210"></svg></div><div class="note" id="patExp"></div></div>
 
-  <div class="card">
-    <h2>1. Teoria da Cor e Psicologia Visual nos Graficos</h2>
-    <p>O <strong>Verde</strong> e o <strong>Vermelho</strong> ativam reflexos primitivos no cerebro (urgencia, medo e ganancia). Traders profissionais usam cores frias (Azul e Cinza) para decidir com calma:</p>
-    <div class="tabs" id="colTabs">
-      <button class="btn on" data-col="emo">Tema Emocional (Verde / Vermelho)</button>
-      <button class="btn" data-col="calm">Tema Profissional (Azul / Cinza Frio)</button>
-    </div>
-    <div class="chart-box"><svg id="colSvg" viewBox="0 0 800 185"></svg></div>
-    <div class="explain" id="colExplain"></div>
-  </div>
+<div class="card"><h2>3. Laboratorio de Indicadores (Testa em Tendencia vs. Lateral)</h2><p>Este simulador mostra onde cada indicador funciona e onde falha. Clica nos botoes:</p><div class="tabs"><button class="btn on" id="i_trend" onclick="setInd('trend')">Tendencia (Media / Donchian)</button><button class="btn" id="i_rsi" onclick="setInd('rsi')">Forca (RSI)</button><button class="btn" id="i_bb" onclick="setInd('bb')">Volatilidade (Bollinger)</button><button class="btn" id="i_vwap" onclick="setInd('vwap')">Fluxo (VWAP)</button></div><div class="tabs"><button class="btn regime on" id="r_up" onclick="setReg('up')">Mercado em Tendencia</button><button class="btn regime" id="r_side" onclick="setReg('side')">Mercado Lateral</button></div><div class="chart-box"><svg id="indSvg" viewBox="0 0 800 240"></svg></div><div class="note" id="indExp"></div></div>
+<div class="card"><h2>4. Simulador Interactivo de Risco e Sobrevivencia</h2><p>Arrasta as barras para veres o grafico e os numeros a mudar ao vivo apos 10 perdas seguidas:</p><div class="slider-row"><label><span>Capital Inicial:</span><span id="lblCap">10.000 &euro;</span></label><input type="range" id="rngCap" min="500" max="50000" step="500" value="10000" oninput="updateRisk()"></div><div class="slider-row"><label><span>Risco por Trade (%):</span><span id="lblRisk">1.0%</span></label><input type="range" id="rngRisk" min="0.5" max="15" step="0.5" value="1" oninput="updateRisk()"></div><div class="slider-row"><label><span>Custo medio por trade (&euro;):</span><span id="lblCost">4 &euro;</span></label><input type="range" id="rngCost" min="0" max="40" step="1" value="4" oninput="updateRisk()"></div><div class="chart-box"><svg id="riskSvg" viewBox="0 0 800 170"></svg></div><div class="stats"><div class="stat"><span>Saldo apos 10 perdas</span><strong id="stAfter">9.044 &euro;</strong></div><div class="stat"><span>Queda total</span><strong id="stDl">-9.6%</strong></div><div class="stat"><span>Taxas (200 trades)</span><strong id="stFees">800 &euro;</strong></div><div class="stat"><span>Estado</span><strong id="stDiag">Saudavel</strong></div></div><p style="margin-top:20px"><a href="ficha01_donchian_h4.html" style="display:inline-block;background:#0f172a;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">Proximo Passo: Simulador Universal de Custos &rarr;</a></p></div>
 
-  <div class="card">
-    <h2>2. Padroes Graficos Classicos (Clica para Ver a Armadilha)</h2>
-    <p>Os padroes mostram a batalha entre compradores e vendedores. Clica nos botoes para veres o desenho e o erro que 90% dos iniciantes cometem:</p>
-    <div class="tabs" id="patTabs">
-      <button class="btn on" data-pat="sq">Suporte e Resistencia</button>
-      <button class="btn" data-pat="tri">Triangulo (Compressao)</btton>
-      <button class="btn" data-pat="dtp">Topo Duplo (Mde Inversao)</btton>
-      <button class="btn" data-pat="flg">Bandeira de Alta (Continuacao)</button>
-    </div>
-    <div class="chart-box"><svg id="patSvg" viewBox="0 0 800 215"></svg></div>
-    <div class="explain" id="patExplain"></div>
-  </div>
-
-  <div class="card">
-    <h2>3. Laboratorio Interativo de Indicadores</h2>
-    <p>Testa cada familia de indicadores em tendencia forte vs. mercado parado de lado:</p>
-    <div class="tabs" id="indTabs">
-      <button class="btn on" data-ind="trend">1. Tendencia (Media Movel / Donchian)</button>
-      <button class="btn" data-ind="rsi">2. Forca (RSI)</button>
-      <button class="btn" data-ind="bb">3. Volatilidade (Bollinger / ATR)</btton>
-      <button class="btn" data-ind="vwap">4. Fluxo (VWAP)</btton>
-    </div>
-    <div class="tabs" id="regTabs">
-      <button class="btn regime on" data-reg="up">Mercado em Tendencia</btton>
-      <button class="btn regime" data-reg="side">Mercado Lateral</button>
-    </div>
-    <div class="chart-box"><svg id="indSvg" viewBox="0 0 800 250"></svg></div>
-    <div class="explain" id="indExplain"></div>
-  </div>
-  <div class="card">
-    <h2>4. Velas, Timeframes e Estrutura de Mercado</h2>
-    <div class="grid">
-      <div class="mini"><svg viewBox="0 0 320 205"><rect x="0" y="0" width="320" height="205" rx="10" fill="#0f1d21"/><line x1="75" y1="25" x2="75" y2="180" stroke="#38bdf8" stroke-width="3"/><rect x="57" y="58" width="36" height="82" rx="4" fill="#0284c7"/><text x="105" y="33" fill="#bae6fd" font-size="12">Maximo</text><text x="105" y="64" fill="#38bdf8" font-size="12" font-weight="bold">Fecho (Alta)</text><text x="105" y="140" fill="#e2e8f0" font-size="12">Abertura</text><text x="105" y="178" fill="#94a3b8" font-size="12">Minimo</text><line x1="235" y1="25" x2="235" y2="180" stroke="#94a3b8" stroke-width="3"/><rect x="217" y="58" width="36" height="82" rx="4" fill="#475569"/><text x="202" y="197" fill="#cbd5e1" font-size="11" font-weight="bold">Vela de Queda</text></svg></div>
-      <div class="mini"><h3>Timeframes (Qual Escolher?)</h3><p><strong>1m a 15m (Ruido):</strong> Cheio de movimentos falsos e taxas altas.<br><strong>4H e 1D (Direcao Real):</strong> Onde os grandes fundos operam, com calma para decidir.</p></div>
-      <div class="mini"><h3>Os 3 Mercados Principais</h3><p><strong>Cripto (BTC, ETH)":</strong> 24h/7d, tendencias fortes.<br><strong>Forex (EURUSD):</strong> Lateral, cobra swaps diarios.<br><strong>Indices (S&amp;P 500):</strong> Horario fixo, sobe no longo prazo.</p></div>
-    </div>
-  </div>
-  <div class="card">
-    <h2>5. Mindset Profissional e Checklist Antes de Operar</h2>
-    <div class="grid">
-      <div class="mini"><h3>1. FOMO (Medo de Ficar de Fora)</x3><p>Entrar atrasado numa vela gigante — geralmente compras o topo exato.</p></div>
-      <div class="mini"><h3>2. Revenge Trading (Vinganca)</h3><p>Dobrar o lote apos uma perda para recuperar rapido. Quebra contas num so dia.</p></div>
-      <div class="mini"><h3>3. Overtrading (Operar por Tedio)</x3><p>Abrir trades sem sinal so para sentir acao. As comissoes comem todo o saldo.</p></div>
-      <div class="mini"><h3>4. Pular de Galho em Galho</h3><p>Mudar de indicador apos 3 perdas normais em vez de respeitar 200 trades.</p></div>
-    </div>
-    <h3 style="margin-top:18px">Checklist Obrigatoria Pre-Trade (Marca as 5 Regras):</h3>
-    <div class="chk-list" id="chkList">
-      <label><input type="checkbox" class="pre-chk"> 1. Tenho o Stop Loss definido antes de entrar.</label>
-      <label><input type="checkbox" class="pre-chk"> 2. Se tocar no Stop, perdo no maximo 1% da conta.</label>
-      <label><input type="checkbox" class="pre-chk"> 3. Estou calmo (nao acabei de perder nem estou com pressa).</label>
-      <label><input type="checkbox" class="pre-chk"> 4. O sinal esta no meu plano escrito (nao e palpite).</label>
-      <label><input type="checkbox" class="pre-chk"> 5. Confirmei a direcao no grafico de 4H ou Diario.</label>
-    </div>
-    <div id="chkStatus" style="background:#fee2e2;color:#991b1b;padding:12px 16px;border-radius:8px;font-weight:700">Bloqueado: Cumpre as 5 regras acima antes de entrares no mercado.</div>
-  </div>
-
-  <div class="card">
-    <h2>6. Simulador de Risco e Matematica das Perdas</h2>
-    <p>Mexe nos controlos para veres o efeito de <strong>10 perdas seguidas</strong> e o peso das taxas em 200 trades:</p>
-    <div class="slider-row"><label><span>Capital Inicial:</span><span id="lblCap">10.000 &euro;</span></label><input type="range" id="rngCap" min="500" max="50000" step="500" value="10000"></div>
-    <div class="slider-row"><label><span>Risco por Trade (%):</span><span id="lblRisk">1.0%</span></label><input type="range" id="rngRisk" min="0.5" max="15" step="0.5" value="1"></div>
-    <div class="slider-row"><label><span>Custo medio por trade (&euro;):</span><span id="lblCost">4 &euro;</span></label><input type="range" id="rngCost" min="0" max="40" step="1" value="4"></div>
-    <div class="chart-box"><svg id="riskSvg" viewBox="0 0 800 175"></svg></div>
-    <div class="stats">
-      <div class="stat"><span>Saldo apos 10 perdas</span><strong id="stAfter">9.044 &euro;</strong></div>
-      <div class="stat"><span>Queda total</span><strong id="stDd">-9.6%</strong></div>
-      <div class="stat"><span>Taxas (200 trades)</span><strong id="stFees">800 &euro;</strong></div>
-      <div class="stat"><span>Estado</span><strong id="stDiag">Saudavel</strong></div>
-    </div>
-    <table class="tbl"><tr><th>Se perderes...</th><th>Precisas de ganhar para voltar ao zero...</th><th>Realidade</th></tr><tr><td>-10%</td><td>+11.1%</td><td>Facil com disciplina</td></tr><tr><td>-25%</td><td>+33.3%</td><td>Exige paciencia</td></tr><tr><td>-50%</td><td>+100.0% (dobrar a conta)</td><td>Armadilha emocional grave</td></tr><tr><td>-80%</td><td>+400.0% (quintuplicar)</td><td>Conta praticamente perdida</td></tr></table>
-    <p style="margin-top:22px"><a href="ficha01_donchian_h4.html" style="display:inline-block;background:#14282d;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">Avancar para a Licao 1: Como os Custos Destroem Estrategias &rarr;</a></p>
-  </div>
-</div>
-<script>
-function renderColor(m){const c=[50,72,64,92,115,108,132,122,148,138,158,172],ep=v=>160-v*0.78,emo=m==='emo',u=emo?'#10b981':'#38bdf8',d=emo?'#ef4444':'#64748b';let h='';for(let i=1;i<c.length;i++){const o=c[i-1],cl=c[i],up=cl>=o,x=45+i*62,y1=ep(Math.max(o,cl)),y2=ep(Math.min(o,cl));h+=`<line x1="${x+16}" y1="${y1-9}" x2="${x+16}" y2="${y2+9}" stroke="${up?u:d}" stroke-width="2"/><rect x="${x}" y="${y1}" width="32" height="${Math.max(8,y2-y1)}" rx="3" fill="${up?u:d}"/>`;}colSvg.innerHTML=h;colExplain.innerHTML=emo?'<strong>Cores Emocionais (Verde/Vermelho):</strong> O contraste forte gera adrenalina e medo, levando a impulsos.':'<strong>Cores Frias (Azul/Cinza):</strong> Reduz a ansiedade visual e ajuda a ler os dados com calma.';}
-colTabs.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{colTabs.querySelectorAll('.btn').forEach(x=>x.list = x.classList.remove('on'));b.classList.add('on');renderColor(b.dataset.col);});renderColor('emo');
-
-function renderPat(p){let s='',t='';if(p==='sq'){s='<line x1="40" y1="48" x2="760" y2="48" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4"/><line x1="40" y1="172" x2="760" y2="172" stroke="#10b981" stroke-width="2.5" stroke-dasharray="6,4"/><path d="M50,168 L170,52 L290,168 L410,50 L530,170 L625,34 L665,65 L750,24" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="625" cy="34" r="7" fill="#f59e0b"/><text x="550" y="22" fill="#fcd34d" font-size="12" font-weight="bold">Falso Rompimento</text>';t='<strong>Suporte e Resistencia:</strong> Espera que o preco teste a linha de cima como chao antes de comprar.';}else if(p==='tri'){s='<line x1="60" y1="35" x2="740" y2="112" stroke="#38bdf8" stroke-width="2"/><line x1="60" y1="190" x2="740" y2="112" stroke="#38bdf8" stroke-width="2"/><path d="M80,178 L180,48 L280,162 L380,68 L480,142 L560,92 L600,118 L740,38" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="600" cy="118" r="7" fill="#10b981"/><text x="555" y="142" fill="#6ee7b7" font-size="12" font-weight="bold">Rompimento Confirmado</text>';t='<strong>Triangulo (Compressao):</strong> Nunca adivinhes o lado antes do rompimento das linhas.';}else if(p==='dtp'){s='<line x1="40" y1="40" x2="760" y2="40" stroke="#ef4444" stroke-dasharray="5,5"/><line x1="40" y1="128" x2="760" y2="128" stroke="#f59e0b" stroke-width="2"/><path d="M50,188 L190,42 L310,126 L430,43 L550,128 L680,198" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="550" cy="128" r="7" fill="#10b981"/><text x="530" y="152" fill="#6ee7b7" font-size="12" font-weight="bold">Entrada Segura</text>';t='<strong>Topo Duplo (M):</strong> So vale quando quebra a linha amarela de baixo (Linha de Pescoco).';}else{s='<path d="M50,190 L220,58 L310,92 L390,72 L470,102 L550,82 L730,24" fill="none" stroke="#e2e8f0" stroke-width="3"/><line x1="220" y1="52" x2="560" y2="82" stroke="#38bdf8" stroke="2"/><line x1="220" y1="92" x2="560" y2="122" stroke="#38bdf8" stroke-width="2"/><circle cx="550" cy="82" r="7" fill="#10b981"/><text x="565" y="82" fill="#6ee7b7" font-size="12" font-weight="bold">Continuacao</text>';t='<strong>Bandeira de Alta:</strong> Pausa curta apos subida forte. Stop Loss logo abaixo do canal.';}patSvg.innerHTML=s;patExplain.innerHTML=t;}
-patTabs.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{patTabs.querySelectorAll('.btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderPat(b.dataset.pat);});renderPat('sq');
-
-const upP=[100,103,101,106,110,108,115,121,119,126,133,130,138,145,143,152,160,158,167,175],sdP=[120,126,118,125,117,127,119,126,116,125,118,127,117,124,118,126,117,125,119,126];let cI='trend',cR='up';
-const inf={trend:{up:'<strong>Tendencia em Alta:</strong> A Linha azul acompanha a subida e segura o movimento grande.',side:'<strong>Armadilha Lateral:</strong> Cruza a media varias vezes e gera sinais falsos.'},rsi:{up:'<strong>Armadilha RSI:</strong> Marca sobrecomprado cedo demais numa subida forte.',side:'<strong>RSI em Lateral:</strong> Funciona bem entre o teto e o chao.'},bb:{up:'<strong>Bollinger / ATR:</strong> Alargam para mostrar volatilidade e posicionar o Stop.',side:'<strong>Bollinger Lateral:</strong> Aperta e define limites claros.'},vwap:{up:'<strong>VWAP em Alta:</strong> Mostra onde os grandes fundos compram nos recuos.',side:'<strong>VWAP Lateral:</strong> Preco colado a linha sem direcao.'}};
-function drawInd(){const pts=cR==='up'?upP:sdP,minP=Math.min(...pts)-8,maxP=Math.max(...pts)+8,l=i=>45+i*(710/(pts.length-1)),y=v=>215-((v-minP)/(maxP-minP))*180;let pp=pts.map((p,i)=>`${i===0>'M':'L'}${l(i).toFixed(1)},${y(p).toFixed(1)}`).join(' '),ih='';if(cI==='trend'||cI==='vwap'){const ma=pts.map((_,t)=>pts.slice(Math.max(0,t-3),t+1).reduce((a,b)=>a+b,0)/Math.min(t+1,4));ih=`<path d="${ma.map((p,i)=>`${i===0>'M':'L'}${l(i).toFixed(1)},${y(p).toFixed(1)}`).join(' ')}" fill="none" stroke="${cI==='trend'?'#38bdf8':'#f59e0b'}" stroke-width="3"/>`;}else if(cI==='bb'){const ma=pts.map((_,t)=>pts.slice(Math.max(0,t-3),t+1).reduce((a,b)=>a+b,0)/Math.min(t+1,4));ih=`<path d="${ma.map((v,i)=>`${i===0>'M':'L'}${l(i).toFixed(1)},${y(v+6).toFixed(1)}`).join(' ')}" fill="none" stroke="#a78bfa" stroke-width="2"/><path d="${ma.map((2,i)=>`${i===0?'M':'L'}${l(i).toFixed(1)},${y(v-6).toFixed(1)}`).join(' ')}" fill="none" stroke="#a78bfa" stroke-width="2"/>`;}else{ih='<line x1="45" y1="60" x2="755" y2="60" stroke="#ef4444" stroke-dasharray="4,4"/><line x1="45" y1="190" x2="755" y2="190" stroke="#10b981" stroke-dasharray="4,4"/>';}let dots='';[3,8,13,17].forEach(idx=>{const ok=(cI==='trend'&&cR==='up')||(cI==='vwap'&&cR==='up')||(cI==='rsi'&&cR==='side')||(cI==='bb'&&cR==='side');dots+=`<circle cx="${l(idx))}" cy="${y(pts[idx])}" r="7" fill="${ok?'#10b981':'#ef4444'}"/><text x="${l(idx)-16}" y="${y(pts[idx])-11}" fill="${ok?'#6ee7b7':'#fca5a1'}" font-size="11" font-weight="bold">${ok>'Acerto':'Falso'}</text>`;});indSvg.innerHTML=`<path d="${pp}" fill="none" stroke="#e2e8f0" stroke-width="3"/>${ih}${dots}`;indExplain.innerHTML=inf[cI][cR];}
-indTabs.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{indTabs.querySelectorAll('.btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');cI=b.dataset.ind;drawInd();});
-regTabs.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{regTabs.querySelectorAll('.btn').forEach(x=>x.list = x.classList.remove('on'));b.classList.add('on');cR=b.dataset.reg;drawInd();});drawInd();
-
-document.querySelectorAll('.pre-chk').forEach(c=>c.onchange=()=>{const all=[...document.querySelectorAll('.pre-chk')].every(x=>x.checked);chkStatus.style.background=all?'#dcfce7':'#fee2e2';chkStatus.style.color=all?'#166534':'#991b1b';chkStatus.textContent=all?'Liberado: Todas as 5 regras cumpridas. Podes executar com calma!':'Bloqueado: Cumpre as 5 regras acima antes de entrares no mercado.';});
-
-function updateRisk(){const cap=+rngCap.value,rsk=+rngRisk.value,cst=+rngCost.value;lblCap.textContent=cap.toLocaleString('pt-PT')+' €';lblRisk.textContent=rsk.toFixed(1)+'%';lblCost.textContent=cst+' €';let eq=cap,pts=[cap];for(let i=0;i<10;i++){eq=eq*(1-rsk/100);pts.push(eq);}const dd=((cap-eq)/cap)*100;stAfter.textContent=Math.round(eq).toLocaleString('0t-PT')+' €';stDd.textContent='-'+dd.toFixed(1)+'%';stFees.textContent=(cst*200).toLocaleString('0t-PT')+' €';stDiag.textContent=dd>35?'Quebrada':(dd>15?'Risco Alto':'Saudavel');stDiag.className=dd>15?'bad':'';const x=i=>45+i*71,y=v=>150-(v/cap)*120,col=dd>20?'#ef4444':'#34d399';riskSvg.innerHTML=`<path d="${pts.map((v,i)=>`${i===0>'M':'L'}${x(i)},${y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="${col}" stroke-width="4"/>`;}
-['RngCap','rngRisk','rngCost'].forEach(i=>{at=document.getElementById(i.toLowerCase().text=i);if(document.getElementById(i))document.getElementById(i).oninput=updateRisk;});updateRisk();
-</script></body></html>
+'''
+js =<script>
+function setTheme(m){btnCalm.className=(m=='calm')?'btn on':'btn';btnEmo.className=(m=='emo')?'btn on':'btn';document.body.style.background=(m=='calm')?'#f4f6f8':'#fee2e2';const c=[50,72,64,92,115,108,132,122,148,138,158,172],up=(m=='calm')?'#0d9488':'#00ff66',dn=(m=='calm')?'#64748b':'#ff2222';let h='';for(let i=1;i<c.length;i++){const o=c[i-1],cl=c[i],u=cl>=o,x=45+i*62,y1=150-Math.max(o,cl)*0.75,y2=150-Math.min(o,cl)*0.75;h+='<line x1="'+(x+16)+'" y1="'+(y1-8)+'" x2="'+(x+16)+'" y2="'+(y2+8)+'" stroke="'+(u?up:dn)+'" stroke-width="2"/><rect x="'+x+'" y="'+y1+'" width="32" height="'+Math.max(8,y2-y1)+'" rx="3" fill="'+(u?up:dn)+'"/>';}colSvg.innerHTML=h;colExp.innerHTML=(m=='calm')?'<strong>Tema Institucional Calmo:</strong> Fundo neutro e tons contidos ajudam a ler probabilidades com frieza.':'<strong>Tema Emocional:</strong> Cores fortes ativam urgencia e impulso.';}setTheme('calm');
+'''
+js+='''function setPat(p){['sq','tri','dtp','flg'].forEach(function(k){document.getElementById('p_'+k).className=(k==p)?'btn on':'btn';});const d={sq:['<line x1="40" y1="45" x2="760" y2="45" stroke="#fb7185" stroke-width="2.5" stroke-dasharray="6,4"/><line x1="40" y1="170" x2="760" y2="170" stroke="#2dd4bf" stroke-width="2.5" stroke-dasharray="6,4"/><path d="M50,165 L170,50 L290,165 L410,48 L530,167 L625,30 L665,62 L750,22" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="625" cy="30" r="7" fill="#fbbf24"/>','<strong>Suporte e Resistencia:</strong> Espera o reteste acima da linha antes de entrar.'],tri:['<line x1="60" y1="35" x2="740" y2="110" stroke="#38bdf8" stroke-width="2"/><line x1="60" y1="185" x2="740" y2="110" stroke="#38bdf8" stroke-width="2"/><path d="M80,175 L180,48 L280,160 L380,68 L480,140 L560,90 L600,115 L740,35" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="600" cy="115" r="7" fill="#2dd4bf"/>','<strong>Triangulo:</strong> Compressao de volatilidade; aguarda a quebra clara.'],dtp:['<line x1="40" y1="40" x2="760" y2="40" stroke="#fb7185" stroke-dasharray="5,5"/><line x1="40" y1="125" x2="760" y2="125" stroke="#fbbf24" stroke-width="2"/><path d="M50,185 L190,42 L310,124 L430,43 L550,125 L680,195" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="550" cy="125" r="7" fill="#2dd4bf"/>','<strong>Topo Duplo:</strong> Confirmado apenas ao quebrar a linha amarela.'],flg:['<path d="M50,185 L220,58 L310,90 L390,70 L470,100 L550,80 L730,24" fill="none" stroke="#e2e8f0" stroke-width="3"/><line x1="220" y1="52" x2="560" y2="80" stroke="#38bdf8" stroke-width="2"/><line x1="220" y1="90" x2="560" y2="118" stroke="#38bdf8" stroke-width="2"/><circle cx="550" cy="80" r="7" fill="#2dd4bf"/>','<strong>Bandeira de Alta:</strong> Pausa curta apos subida forte; stop abaixo do canal.']};patSvg.innerHTML=d[p][0];patExp.innerHTML=d[p][1];}setPat('sq');
+'''
+js+='''let cI='trend',cR='up';const upP=[100,103,101,106,110,108,115,121,119,126,133,130,138,145,143,152,160,158,167,175],sdP=[120,126,118,125,117,127,119,126,116,125,118,127,117,124,118,126,117,125,119,126],inf={trend:{up:'<strong>Tendencia:</strong> Acompanha o movimento principal.',side:'<strong>Lateral:</strong> Gera sinais falsos.'},rsi:{up:'<strong>RSI Tendencia:</strong> Marca sobrecomprado cedo demais.',side:'<strong>RSI Lateral:</strong> Funciona entre suporte e resistencia.'},bb:{up:'<strong>Bollinger:</strong> Alarga com volatilidade.',side:'<strong>Bollinger Lateral:</strong> Mostra compressao.'},vwap:{up:'<strong>VWAP Alta:</strong> Apoio institucional nos recuos.',side:'<strong>VWAP Lateral:</strong> Preco sem direcao.'}};function setInd(i){cI=i;['trend','rsi','bb','vwap'].forEach(function(k){document.getElementById('i_'+k).className=(k==i)?'btn on':'btn';});drawInd();}function setReg(r){cR=r;['up','side'].forEach(function(k){document.getElementById('r_'+k).className=(k==r)?'btn regime on':'btn regime';});drawInd();}function drawInd(){const pts=(cR=='up')?upP:sdP,mn=Math.min(...pts)-8,mx=Math.max(...pts)+8;function x(i){return 45+i*(710/(pts.length-1));}function y(v){return 205-((v-mn)/(mx-mn))*170;}let pp=pts.map(function(v,i){return(i==0?'M':'L')+x(i).toFixed(1)+','+y(v).toFixed(1);}).join(' '),ih='';if(cI=='trend'||cI=='vwap'){const ma=pts.map(function(_,i){return pts.slice(Math.max(0,i-3),i+1).reduce(function(a,b){return a+b;},0)/Math.min(i+1,4);});ih='<path d="'+ma.map(function(v,i){return(i==0?'M':'L')+x(i).toFixed(1)+','+y(v).toFixed(1);}).join(' ')+'" fill="none" stroke="'+(cI=='trend'?'#38bdf8':'#fbbf24')+'" stroke-width="3"/>';}else if(cI=='bb'){const ma=pts.map(function(_,i){return pts.slice(Math.max(0,i-3),i+1).reduce(function(a,b){return a+b;},0)/Math.min(i+1,4);});ih='<path d="'+ma.map(function(v,i){return(i==0?'M':'L')+x(i).toFixed(1)+','+y(v+6).toFixed(1);}).join(' ')+'" fill="none" stroke="#a78bfa" stroke-width="2"/><path d="'+ma.map(function(v,i){return(i==0?'M':'L')+x(i).toFixed(1)+','+y(v-6).toFixed(1);}).join(' ')+'" fill="none" stroke="#a78bfa" stroke-width="2"/>';}else{ih='<line x1="45" y1="55" x2="755" y2="55" stroke="#fb7185" stroke-dasharray="4,4"/><line x1="45" y1="185" x2="755" y2="185" stroke="#2dd4bf" stroke-dasharray="4,4"/>';}let dt='';[3,8,13,17].forEach(function(idx){const ok=(cI=='trend'&&cR=='up')||(cI=='vwap'&&cR=='up')||(cI=='rsi'&&cR=='side')||(cI=='bb'&&cR=='side');dt+='<circle cx="'+x(idx)+'" cy="'+y(pts[idx])+'" r="7" fill="'+(ok?'#2dd4bf':'#fb7185')+'"/>';});indSvg.innerHTML='<path d="'+pp+'" fill="none" stroke="#e2e8f0" stroke-width="3"/>'+ih+dt;indExp.innerHTML=inf[cI][cR];}drawInd();
+'''
+js+='''function updateRisk(){const cap=+rngCap.value,rsk=+rngRisk.value,cst=+rngCost.value;lblCap.textContent=cap.toLocaleString('pt-PT')+' EUR';lblRisk.textContent=rsk.toFixed(1)+'%';lblCost.textContent=cst+' EUR';let eq=cap,pts=[cap];for(let i=0;i<10;i++){eq=eq*(1-rsk/100);pts.push(eq);}const dd=((cap-eq)/cap)*100;stAfter.textContent=Math.round(eq).toLocaleString('pt-PT')+' EUR';stDd.textContent='-'+dd.toFixed(1)+'%';stFees.textContent=(cst*200).toLocaleString('pt-PT')+' EUR';stDiag.textContent=dd>35?'Quebrada':(dd>15?'Risco Alto':'Saudavel');stDiag.className=dd>15?'bad':'';function x(i){return 45+i*71;}function y(v){return 145-(v/cap)*115;}const col=dd>20?'#fb7185':'#2dd4bf';riskSvg.innerHTML='<path d="'+pts.map(function(v,i){return(i==0?'M':'L')+x(i)+','+y(v).toFixed(1);}).join(' ')+'" fill="none" stroke="'+col+'" stroke-width="4"/>';}updateRisk();
+</script></div></body></html>
