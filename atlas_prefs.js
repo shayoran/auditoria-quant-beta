@@ -35,3 +35,36 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
     fetch('termos.json').then(function(r){return r.json();}).then(applyTermos).catch(function(){});
   });
 })();
+
+(function(){
+  function initAtlasCards(){
+    document.querySelectorAll('[data-atlas-card]').forEach(function(card){
+      var k1=card.querySelector('[data-kpi-1]');
+      var k2=card.querySelector('[data-kpi-2]');
+      var emptyBox=card.querySelector('[data-card-empty]');
+      var btnEx=card.querySelector('[data-card-example]');
+      var btnRst=card.querySelector('[data-card-reset]');
+      var d1=k1?k1.textContent:'—';
+      var d2=k2?k2.textContent:'—';
+      var ex1=card.getAttribute('data-ex-1')||d1;
+      var ex2=card.getAttribute('data-ex-2')||d2;
+      if(btnEx){
+        btnEx.addEventListener('click',function(){
+          if(k1) k1.textContent=ex1;
+          if(k2) k2.textContent=ex2;
+          if(emptyBox) emptyBox.style.display='none';
+          card.setAttribute('data-state','active');
+        });
+      }
+      if(btnRst){
+        btnRst.addEventListener('click',function(){
+          if(k1) k1.textContent=d1;
+          if(k2) k2.textContent=d2;
+          if(emptyBox) emptyBox.style.display='block';
+          card.setAttribute('data-state','empty');
+        });
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded',initAtlasCards);
+})();
