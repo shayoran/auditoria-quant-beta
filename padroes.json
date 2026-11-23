@@ -1,0 +1,55 @@
+{
+  "fvg": {
+    "nome": "Fair Value Gap",
+    "estado": "codificado",
+    "subjetividade": "baixa",
+    "definicao": "Tres velas: FVG de subida se minimo[t] > maximo[t-2]; de descida se maximo[t] < minimo[t-2]. Sinal na vela t.",
+    "selo": "Sem vantagem detetada (exploração H4 cripto, k=3, 6/12 velas, 10 bps, gatilho isolado, n=836 [holdout intocado], só deteta efeitos acima de ~0.61% por trade)"
+  },
+  "sweep": {
+    "nome": "Liquidity Sweep (SSL/BSL)",
+    "estado": "codificado",
+    "subjetividade": "media",
+    "definicao": "Ultimo swing confirmado (k barras): sweep de SSL (+1) se minimo[t] < nivel e fecho[t] > nivel; BSL (-1) se maximo[t] > nivel e fecho[t] < nivel. Nivel com idade maxima.",
+    "selo": "Sem vantagem detetada (exploração H4 cripto, k=3, 6/12 velas, 10 bps, gatilho isolado, n=544 [holdout intocado], só deteta efeitos acima de ~0.76% por trade)"
+  },
+  "bos": {
+    "nome": "Break of Structure",
+    "estado": "codificado",
+    "subjetividade": "media",
+    "definicao": "Fecho acima do ultimo swing high confirmado (+1) ou abaixo do ultimo swing low (-1), uma vez por swing.",
+    "selo": "Sem vantagem detetada (exploração H4 cripto, k=3, 6/12 velas, 10 bps, gatilho isolado, n=503 [holdout intocado], só deteta efeitos acima de ~0.81% por trade)"
+  },
+  "choch": {
+    "nome": "Change of Character",
+    "estado": "codificado",
+    "subjetividade": "alta",
+    "definicao": "BOS contrario ao sentido do BOS anterior.",
+    "selo": "Sem vantagem detetada (exploração H4 cripto, k=3, 6/12 velas, 10 bps, gatilho isolado, n=258 [holdout intocado], só deteta efeitos acima de ~1.19% por trade)"
+  },
+  "double": {
+    "nome": "Topo/Fundo Duplo",
+    "estado": "codificado",
+    "subjetividade": "media",
+    "definicao": "Dois swings a menos de tol*ATR um do outro, separados por min_sep..max_sep barras; sinal no fecho para la da neckline (minimo/maximo entre eles). Topo duplo = -1, fundo duplo = +1.",
+    "selo": "Sem vantagem detetada (exploração H4 cripto, k=3, 6/12 velas, 10 bps, gatilho isolado, n=150 [holdout intocado], só deteta efeitos acima de ~1.53% por trade)"
+  },
+  "ob": {
+    "nome": "Order Block",
+    "estado": "nao codificado",
+    "subjetividade": "muito alta",
+    "definicao": "Ultima vela contraria antes de um deslocamento. Varias definicoes incompativeis (corpo vs pavio, 50%, mitigacao)."
+  },
+  "oco": {
+    "nome": "Ombro-Cabeca-Ombro",
+    "estado": "nao codificado",
+    "subjetividade": "muito alta",
+    "definicao": "Exige tres pivots com regras de simetria arbitrarias; fica para depois do topo duplo ser avaliado."
+  },
+  "bandeira": {
+    "nome": "Bandeira & Cunha",
+    "estado": "nao codificado",
+    "subjetividade": "muito alta",
+    "definicao": "Mastro + consolidacao: limiares de inclinacao e duracao sao escolhas livres."
+  }
+}
