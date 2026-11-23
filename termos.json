@@ -1,0 +1,34 @@
+{
+  "ev": {
+    "tecnico": "Expectancia (EV em R)",
+    "humano": "Expectancia (lucro medio por 1 R arriscado)",
+    "titulo_humano": "O teu metodo rende em media por cada unidade de risco?",
+    "interpretacao": "Acima de 0,00 R ha vantagem media na amostra; abaixo ou igual a 0,00 R nao ha vantagem liquida.",
+    "exemplo": "Se arriscas 35 EUR por trade e EV = +0,15 R, a media teorica e +5,25 EUR por trade antes de variancia.",
+    "porque": ""
+  },
+  "sorte": {
+    "tecnico": "Depende de Sorte",
+    "humano": "Depende de Sorte (resultado sensivel a poucos trades ou custos)",
+    "titulo_humano": "O teu resultado veio de metodo ou de sorte?",
+    "interpretacao": "O lucro total desaparece ou fica negativo ao retirar os 2 melhores trades ou ao aplicar custos reais.",
+    "exemplo": "Em 40 trades, 2 picos isolados podem gerar +8 R; sem eles, a serie passa a -2 R.",
+    "porque": "Aparece Depende de Sorte porque a media depende de outliers raros ou ignora comissoes, spread e slippage que corroem margens curtas."
+  },
+  "drawdown": {
+    "tecnico": "Drawdown Maximo",
+    "humano": "Queda Maxima (Drawdown desde o pico)",
+    "titulo_humano": "Qual foi o maior tombo desde um topo de capital?",
+    "interpretacao": "Mede a queda percentual ou em R de um pico ate ao vale seguinte antes de novo maximo.",
+    "exemplo": "Se a conta sobe de 10 000 EUR para 10 800 EUR e cai para 9 720 EUR, o drawdown desde o pico e -10,0%.",
+    "porque": ""
+  },
+  "mde": {
+    "tecnico": "MDE (Efeito Minimo Detetavel)",
+    "humano": "Efeito Minimo Detetavel (tamanho minimo de vantagem que o teste consegue ver)",
+    "titulo_humano": "Que tamanho de vantagem este teste consegue detetar?",
+    "interpretacao": "Amostras pequenas so detetam vantagens grandes; vantagens pequenas podem passar despercebidas.",
+    "exemplo": "Com n = 503 trades, um MDE de ~0,81% por trade significa que efeitos menores ficam misturados no ruido.",
+    "porque": ""
+  }
+}
