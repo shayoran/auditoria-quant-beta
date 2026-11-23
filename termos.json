@@ -1,34 +1,58 @@
 {
-  "ev": {
-    "tecnico": "Expectancia (EV em R)",
-    "humano": "Expectancia (lucro medio por 1 R arriscado)",
-    "titulo_humano": "O teu metodo rende em media por cada unidade de risco?",
-    "interpretacao": "Acima de 0,00 R ha vantagem media na amostra; abaixo ou igual a 0,00 R nao ha vantagem liquida.",
-    "exemplo": "Se arriscas 35 EUR por trade e EV = +0,15 R, a media teorica e +5,25 EUR por trade antes de variancia.",
-    "porque": ""
+  "expectancy": {
+    "sigla": "EV",
+    "nome_humano": "Expectância (lucro médio por 1 R)",
+    "definicao": "Média matemática ganha ou perdida por cada unidade de risco arriscada ao longo de muitas operações.",
+    "exemplo": "45% de acerto com ganho médio de 1,5 R resulta em +0,13 R por trade.",
+    "porque": "Sem expectância positiva após custos, aumentar o volume apenas acelera a perda de capital."
   },
-  "sorte": {
-    "tecnico": "Depende de Sorte",
-    "humano": "Depende de Sorte (resultado sensivel a poucos trades ou custos)",
-    "titulo_humano": "O teu resultado veio de metodo ou de sorte?",
-    "interpretacao": "O lucro total desaparece ou fica negativo ao retirar os 2 melhores trades ou ao aplicar custos reais.",
-    "exemplo": "Em 40 trades, 2 picos isolados podem gerar +8 R; sem eles, a serie passa a -2 R.",
-    "porque": "Aparece Depende de Sorte porque a media depende de outliers raros ou ignora comissoes, spread e slippage que corroem margens curtas."
+  "depende_de_sorte": {
+    "sigla": "Outliers",
+    "nome_humano": "Depende de Sorte (concentração em outliers)",
+    "definicao": "Quando o lucro líquido da amostra desaparece ao remover os 2 melhores trades ou ao descontar comissões e swap.",
+    "exemplo": "Lucro bruto de 1 700 EUR com 1 100 EUR nos 2 melhores trades e 770 EUR de custos resulta em -170 EUR sem outliers.",
+    "porque": "Resultados dependentes de 1 ou 2 eventos raros não são replicáveis de forma consistente."
+  },
+  "monte_carlo": {
+    "sigla": "MC",
+    "nome_humano": "Simulação de Monte Carlo",
+    "definicao": "Reamostragem aleatória de milhares de sequências possíveis a partir dos parâmetros definidos pelo utilizador.",
+    "exemplo": "2 000 corridas de 90 trades mostram a dispersão entre o percentil 5 e o percentil 95.",
+    "porque": "Permite medir o risco de atingir limites de drawdown por pura sequência de perdas."
+  },
+  "r_multiplo": {
+    "sigla": "R",
+    "nome_humano": "Múltiplo de Risco (R)",
+    "definicao": "Unidade padronizada onde 1 R equivale ao risco inicial planeado para o stop loss da operação.",
+    "exemplo": "Se o risco planeado é 35 EUR, um ganho de 70 EUR equivale a +2,0 R e um stop equivale a -1,0 R.",
+    "porque": "Normaliza resultados entre contas e ativos diferentes sem distorção pelo tamanho do lote."
   },
   "drawdown": {
-    "tecnico": "Drawdown Maximo",
-    "humano": "Queda Maxima (Drawdown desde o pico)",
-    "titulo_humano": "Qual foi o maior tombo desde um topo de capital?",
-    "interpretacao": "Mede a queda percentual ou em R de um pico ate ao vale seguinte antes de novo maximo.",
-    "exemplo": "Se a conta sobe de 10 000 EUR para 10 800 EUR e cai para 9 720 EUR, o drawdown desde o pico e -10,0%.",
-    "porque": ""
+    "sigla": "DD",
+    "nome_humano": "Rebaixamento Máximo (Drawdown)",
+    "definicao": "Queda percentual ou monetária acumulada desde um pico de capital até ao vale seguinte.",
+    "exemplo": "10 perdas seguidas de 0,35% geram um rebaixamento acumulado de -3,50%.",
+    "porque": "Determina a sobrevivência da conta face a limites diários (-5%) e totais (-10%)."
   },
-  "mde": {
-    "tecnico": "MDE (Efeito Minimo Detetavel)",
-    "humano": "Efeito Minimo Detetavel (tamanho minimo de vantagem que o teste consegue ver)",
-    "titulo_humano": "Que tamanho de vantagem este teste consegue detetar?",
-    "interpretacao": "Amostras pequenas so detetam vantagens grandes; vantagens pequenas podem passar despercebidas.",
-    "exemplo": "Com n = 503 trades, um MDE de ~0,81% por trade significa que efeitos menores ficam misturados no ruido.",
-    "porque": ""
+  "holdout": {
+    "sigla": "Holdout / MDE",
+    "nome_humano": "Amostra Reservada (Holdout) e Efeito Mínimo Detetável",
+    "definicao": "Fatia dos dados históricos (30%) nunca usada na exploração e limiar mínimo de efeito distinguível do ruído.",
+    "exemplo": "Com n=836 no holdout, apenas efeitos acima de 0,61% por trade ultrapassam o ruído estatístico.",
+    "porque": "Evita sobreajuste (overfitting) e falsas descobertas em padrões visuais."
+  },
+  "fvg": {
+    "sigla": "FVG",
+    "nome_humano": "Desequilíbrio de Preço (Fair Value Gap)",
+    "definicao": "Lacuna entre o máximo da vela t-2 e o mínimo da vela t numa sequência de três velas.",
+    "exemplo": "Na exploração BTCUSDT H4 (n=836), o sinal isolado atingiu 46,1% sem sobrevivência a Bonferroni.",
+    "porque": "Serve como leitura estrutural objetiva, mas exige validação empírica e gestão de risco."
+  },
+  "payoff": {
+    "sigla": "Payoff",
+    "nome_humano": "Razão Ganho/Perda Média (Payoff)",
+    "definicao": "Quociente entre o ganho médio das operações vencedoras e a perda média das operações perdedoras.",
+    "exemplo": "Ganho médio de +1,50 R dividido por perda média de 1,00 R resulta num payoff de 1,50.",
+    "porque": "A taxa de acerto (win rate) isolada não diz nada sem ser lida em conjunto com o payoff e o tamanho da amostra n."
   }
 }
