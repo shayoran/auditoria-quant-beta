@@ -448,3 +448,114 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initGuia4Avancado);
 })();
+
+(function(){
+  function initGuia4ExtTools(){
+    var calGrid=document.getElementById('g4_cal_grid');
+    if(!calGrid) return;
+    var diarioBase=[
+      {data:'2026-11-18',eur:52.50,r:1.50},
+      {data:'2026-11-19',eur:-35.00,r:-1.00},
+      {data:'2026-11-20',eur:63.00,r:1.80},
+      {data:'2026-11-21',eur:-35.00,r:-1.00},
+      {data:'2026-11-22',eur:49.00,r:1.40},
+      {data:'2026-11-23',eur:52.50,r:1.50}
+    ];
+    function renderCal(){
+      var mesEl=document.getElementById('g4_cal_mes');
+      var ym=(mesEl&&mesEl.value)||'2026-11';
+      var parts=ym.split('-');
+      var y=parseInt(parts[0],10)||2026,m=parseInt(parts[1],10)||11;
+      var daysInMonth=new Date(y,m,0).getDate();
+      var firstDow=(new Date(y,m-1,1).getDay()+6)%7;
+      var byDay={};
+      diarioBase.forEach(function(item){
+        if(item.data.indexOf(ym)===0){
+          var d=parseInt(item.data.slice(8,10),10);
+          byDay[d]=(byDay[d]||0)+item.eur;
+        }
+      });
+      var hdr=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map(function(w){return '<div style="text-align:center;font-weight:700;color:#94a3b8;padding:4px">'+w+'</div>';}).join('');
+      var cells='';
+      for(var b=0;b<firstDow;b++) cells+='<div style="padding:8px;border:1px solid #1e293b;border-radius:6px;opacity:.3"></div>';
+      var green=0,red=0;
+      for(var d=1;d<=daysInMonth;d++){
+        var val=byDay[d];
+        var has=typeof val==='number';
+        if(has){if(val>=0)green++;else red++;}
+        var bg=!has?'#020617':(val>=0?'rgba(16,185,129,.18)':'rgba(239,68,68,.18)');
+        var brd=!has?'#1e293b':(val>=0?'#10b981':'#ef4444');
+        cells+='<div style="padding:6px;border:1px solid '+brd+';border-radius:6px;background:'+bg+';min-height:46px"><div style="font-weight:700">'+d+'</div><div style="font-size:.75rem;margin-top:2px">'+(has?((val>=0?'+':'')+val.toFixed(0)+'€'):'—')+'</div></div>';
+      }
+      calGrid.innerHTML=hdr+cells;
+      var resEl=document.getElementById('g4_cal_resumo');
+      if(resEl) resEl.textContent=(green+red)+' dias operados | '+green+' verdes / '+red+' vermelhos';
+    }
+    var mesInp=document.getElementById('g4_cal_mes');
+    if(mesInp) mesInp.addEventListener('change',renderCal);
+    renderCal();
+    function summarizeCsv(text){
+      var lines=String(text||'').split(/\r?\n/).filter(function(l){return l.trim().length>0;}).slice(1);
+      var rs=[],eurs=[];
+      lines.forEach(function(ln){
+        var c=ln.split(/[,;]/);
+        var rv=parseFloat(c[3]);var ev=parseFloat(c[4]);
+        if(!isNaN(rv)) rs.push(rv);
+        if(!isNaN(ev)) eurs.push(ev);
+      });
+      var n=rs.length;
+      if(!n) return 'Sem linhas numéricas válidas (usa colunas Data,Conta,Ativo,R,EUR).';
+      var w=rs.filter(function(x){return x>0;}),l=rs.filter(function(x){return x<0;});
+      var wr=(w.length/n)*100;
+      var aw=w.length?w.reduce(function(a,b){return a+b;},0)/w.length:0;
+      var al=l.length?Math.abs(l.reduce(function(a,b){return a+b;},0)/l.length):1;
+      var pf=al>0?aw/al:0;
+      var ev=(rs.reduce(function(a,b){return a+b;},0)/n);
+      var sumE=eurs.reduce(function(a,b){return a+b;},0);
+      return 'n = '+n+' | Win Rate: '+wr.toFixed(1).replace('.',',')+'% | Payoff: '+pf.toFixed(2).replace('.',',')+' | EV: '+(ev>=0?'+':'')+ev.toFixed(2).replace('.',',')+' R ('+(sumE>=0?'+':'')+sumE.toFixed(0)+' EUR)';
+    }
+    function bindCsvInput(inpId,outId){
+      var el=document.getElementById(inpId),out=document.getElementById(outId);
+      if(!el||!out) return;
+      el.addEventListener('change',function(ev){
+        var f=ev.target.files&&ev.target.files[0];
+        if(!f) return;
+        var rd=new FileReader();
+        rd.onload=function(){out.textContent=f.name+': '+summarizeCsv(rd.result);};
+        rd.readAsText(f);
+      });
+    }
+    bindCsvInput('g4_cmp_csv_a','g4_cmp_res_a');
+    bindCsvInput('g4_cmp_csv_b','g4_cmp_res_b');
+    var btnDemo=document.getElementById('g4_cmp_demo');
+    if(btnDemo){
+      btnDemo.addEventListener('click',function(){
+        document.getElementById('g4_cmp_res_a').textContent='n = 42 | Win Rate: 61,9% | Payoff: 1,42 | EV: +0,50 R (+735 EUR)';
+        document.getElementById('g4_cmp_res_b').textContent='n = 38 | Win Rate: 57,9% | Payoff: 1,35 | EV: +0,36 R (+478 EUR)';
+      });
+    }
+    var btnPng=document.getElementById('g4_btn_exp_png');
+    if(btnPng){
+      btnPng.addEventListener('click',function(){
+        var c=document.createElement('canvas');c.width=900;c.height=360;
+        var ctx=c.getContext('2d');
+        ctx.fillStyle='#0f172a';ctx.fillRect(0,0,900,360);
+        ctx.strokeStyle='#334155';ctx.strokeRect(16,16,868,328);
+        ctx.fillStyle='#f8fafc';ctx.font='bold 22px sans-serif';ctx.fillText('Auditoria Quant v2.1 — Resumo do Diário',36,56);
+        ctx.fillStyle='#94a3b8';ctx.font='15px sans-serif';ctx.fillText('Gerado localmente em '+new Date().toLocaleString('pt-PT'),36,84);
+        var totEl=document.getElementById('g4_tot_vivo');
+        var netEl=document.getElementById('g4_tot_net');
+        ctx.fillStyle='#10b981';ctx.font='bold 20px sans-serif';ctx.fillText(totEl?totEl.textContent:'Win Rate: 66,7% | Payoff: 1,55 | n = 6',36,140);
+        ctx.fillStyle='#38bdf8';ctx.font='18px sans-serif';ctx.fillText(netEl?netEl.textContent:'+147,00 EUR (+0,70 R / trade)',36,176);
+        var eqCvs=document.getElementById('g4_equity_cvs');
+        if(eqCvs) ctx.drawImage(eqCvs,36,200,828,125);
+        var a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='relatorio_diario_quant.png';a.click();
+      });
+    }
+    var btnPdf=document.getElementById('g4_btn_exp_pdf');
+    if(btnPdf){
+      btnPdf.addEventListener('click',function(){window.print();});
+    }
+  }
+  document.addEventListener('DOMContentLoaded',initGuia4ExtTools);
+})();
