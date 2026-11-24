@@ -158,3 +158,63 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initMcAudit);
 })();
+
+(function(){
+  function initGuia2Risco(){
+    var capEl=document.getElementById('g2_capital');
+    if(!capEl) return;
+    var rskEl=document.getElementById('g2_risco_eur');
+    var slEl=document.getElementById('g2_sl_pips');
+    var pvEl=document.getElementById('g2_pip_val');
+    var limEl=document.getElementById('g2_limiar_alerta');
+    var outPct=document.getElementById('g2_out_pct_lote');
+    var outStops=document.getElementById('g2_out_stops');
+    var out10=document.getElementById('g2_out_10loss');
+    var avLote=document.getElementById('g2_aviso_lote');
+    var alLim=document.getElementById('g2_alerta_limiar');
+    function recalc(){
+      var cap=Math.max(1,parseFloat(capEl.value)||10000);
+      var rsk=Math.max(0.1,parseFloat(rskEl.value)||35);
+      var sl=Math.max(0.1,parseFloat(slEl.value)||20);
+      var pv=Math.max(0.01,parseFloat(pvEl.value)||10);
+      var lim=Math.max(0.05,parseFloat(limEl.value)||1.0);
+      var loteExato=rsk/(sl*pv);
+      var loteMin=loteExato<0.01;
+      var loteArred=Math.max(0.01,Math.round(loteExato*100)/100);
+      var riscoReal=loteArred*sl*pv;
+      var pctConta=(riscoReal/cap)*100;
+      var stops5=Math.floor(5/Math.max(0.0001,pctConta));
+      var stops10=Math.floor(10/Math.max(0.0001,pctConta));
+      var loss10LinPct=pctConta*10;
+      var loss10LinEur=riscoReal*10;
+      var loss10CompPct=(1-Math.pow(1-(pctConta/100),10))*100;
+      outPct.textContent=pctConta.toFixed(2).replace('.',',')+'% | '+loteArred.toFixed(2).replace('.',',')+' lotes';
+      outStops.textContent=stops5+' stops (-5%) / '+stops10+' stops (-10%)';
+      out10.textContent='-'+loss10LinPct.toFixed(2).replace('.',',')+'% (-'+loss10LinEur.toFixed(0)+' EUR) | Comp.: -'+loss10CompPct.toFixed(2).replace('.',',')+'%';
+      if(loteMin){
+        avLote.style.borderColor='#ef4444';
+        avLote.innerHTML='<strong>Aviso de lote mínimo:</strong> O cálculo ('+loteExato.toFixed(4)+' lotes) ficou abaixo de <strong>0,01 lotes</strong>. Ao forçar 0,01 lotes, o risco real sobe para <strong>'+riscoReal.toFixed(2)+' EUR ('+pctConta.toFixed(2)+'%)</strong>.';
+      } else {
+        avLote.style.borderColor='#334155';
+        avLote.textContent='Lote mínimo: OK ('+loteArred.toFixed(2).replace('.',',')+' lotes >= 0,01; risco efetivo '+riscoReal.toFixed(2)+' EUR).';
+      }
+      if(pctConta>lim){
+        alLim.style.borderColor='#ef4444';
+        alLim.innerHTML='<strong>Alerta de risco acima do teu limiar:</strong> '+pctConta.toFixed(2).replace('.',',')+'% excede o teto definido de <strong>'+lim.toFixed(2).replace('.',',')+'%</strong>.';
+      } else {
+        alLim.style.borderColor='#10b981';
+        alLim.textContent='Risco dentro do teu limiar definido ('+pctConta.toFixed(2).replace('.',',')+'% <= '+lim.toFixed(2).replace('.',',')+'%).';
+      }
+    }
+    [capEl,rskEl,slEl,pvEl,limEl].forEach(function(el){el.addEventListener('input',recalc);el.addEventListener('change',recalc);});
+    document.querySelectorAll('[data-g2-preset]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var v=btn.getAttribute('data-g2-preset').split(',');
+        capEl.value=v[0];rskEl.value=v[1];slEl.value=v[2];pvEl.value=v[3];limEl.value=v[4];
+        recalc();
+      });
+    });
+    recalc();
+  }
+  document.addEventListener('DOMContentLoaded',initGuia2Risco);
+})();
