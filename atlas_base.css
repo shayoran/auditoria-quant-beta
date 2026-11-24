@@ -7,3 +7,13 @@
 .atlas-kpi-val{font-size:1.35rem;font-weight:700;margin-top:4px}
 .atlas-empty{padding:12px;border:1px dashed #475569;border-radius:8px;color:#94a3b8;font-size:.9rem;margin:10px 0}
 .atlas-card-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+
+/* Guia 1 Auditoria Visual v2.1 (itens 9,10,62,63,67) */
+.g1-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.g1-badge{padding:4px 10px;border-radius:999px;border:1px solid #334155;background:#020617;font-size:.82rem;font-weight:600}
+.g1-side-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:12px 0}
+.g1-panel{padding:14px;border-radius:10px;border:1px solid #334155;background:#020617}
+.g1-panel-pos{border-left:4px solid #10b981}
+.g1-panel-neg{border-left:4px solid #ef4444}
+.g1-legend-fixed{position:sticky;bottom:8px;z-index:10;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 12px;border-radius:8px;border:1px solid #334155;background:rgba(15,23,42,.96);font-size:.82rem;margin-top:10px}
+.g1-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
