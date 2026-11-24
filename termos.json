@@ -54,5 +54,17 @@
     "definicao": "Quociente entre o ganho médio das operações vencedoras e a perda média das operações perdedoras.",
     "exemplo": "Ganho médio de +1,50 R dividido por perda média de 1,00 R resulta num payoff de 1,50.",
     "porque": "A taxa de acerto (win rate) isolada não diz nada sem ser lida em conjunto com o payoff e o tamanho da amostra n."
+  },
+  "BOS": {
+    "nome_humano": "Quebra de Estrutura (BOS)",
+    "definicao": "Fecho confirmado acima de um topo anterior em tendência de alta (ou abaixo de um fundo em queda), validando continuação.",
+    "exemplo": "Em EURUSD H4, o preço fecha acima do último Swing High de 1,0890 com corpo real.",
+    "porque": "Distingue continuação genuína de meras violações de pavio (liquidity sweeps)."
+  },
+  "FVG": {
+    "nome_humano": "Lacuna de Valor Justo (FVG)",
+    "definicao": "Desequilíbrio de três velas onde a sombra da primeira e da terceira não se sobrepõem, deixando liquidez por preencher.",
+    "exemplo": "Vela impulsiva H4 deixa um vazio de 14 pips entre a máxima da vela 1 e a mínima da vela 3.",
+    "porque": "Marca zonas onde o preço tende a reequilibrar antes de retomar o fluxo institucional."
   }
 }

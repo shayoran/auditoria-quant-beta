@@ -559,3 +559,104 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initGuia4ExtTools);
 })();
+
+(function(){
+  function initGuia1Estrutura(){
+    var cvs=document.getElementById('g1_ohlc_cvs');
+    if(!cvs) return;
+    var selAtivo=document.getElementById('g1_sel_ativo');
+    var selTf=document.getElementById('g1_sel_tf');
+    var btnEst=document.getElementById('g1_btn_so_estrutura');
+    var ctxBox=document.getElementById('g1_ctx_mercado');
+    var viewInfo=document.getElementById('g1_view_info');
+    var presets={
+      'EURUSD|H4':{base:1.0820,step:0.0014,ctx:'EURUSD (H4) — Tendência de Alta estrutural (HH/HL) | ATR(14): 38 pips | Alinhamento W1/D1: Bullish.'},
+      'EURUSD|H1':{base:1.0845,step:0.0007,ctx:'EURUSD (H1) — Consolidação pré-abertura NY | ATR(14): 16 pips | Liquidez acima de 1,0890.'},
+      'EURUSD|M15':{base:1.0860,step:0.0003,ctx:'EURUSD (M15) — Retração a FVG intraday | ATR(14): 7 pips | Aguardar BOS confirmado.'},
+      'XAUUSD|H4':{base:2620.0,step:6.5,ctx:'XAUUSD (H4) — Expansão impulsiva após varrimento de fundos | ATR(14): 18,4 USD | Viés: Alta.'},
+      'XAUUSD|H1':{base:2635.0,step:3.2,ctx:'XAUUSD (H1) — Pullback controlado sobre EMA20/VWAP | ATR(14): 8,2 USD | Estrutura limpa.'},
+      'XAUUSD|M15':{base:2642.0,step:1.5,ctx:'XAUUSD (M15) — Acumulação em sessão de Londres | ATR(14): 3,9 USD | Evitar exaustão.'},
+      'US100|H4':{base:20450,step:55,ctx:'US100 (H4) — Tendência primária ascendente | ATR(14): 145 pts | Pullbacks rasos.'},
+      'US100|H1':{base:20520,step:28,ctx:'US100 (H1) — Rejeição de máxima anterior (CHoCH menor) | ATR(14): 68 pts.'},
+      'US100|M15':{base:20540,step:14,ctx:'US100 (M15) — Abertura de Nova Iorque com expansão de volume | ATR(14): 34 pts.'},
+      'BTCUSDT|H4':{base:91200,step:420,ctx:'BTCUSDT (H4) — Estrutura de continuação acima de suporte semanal | ATR(14): 1 150 USD.'},
+      'BTCUSDT|H1':{base:91800,step:210,ctx:'BTCUSDT (H1) — Compressão de range com funding neutro | ATR(14): 520 USD.'},
+      'BTCUSDT|M15':{base:92100,step:95,ctx:'BTCUSDT (M15) — Varrimento de liquidez local (FVG ativo) | ATR(14): 240 USD.'}
+    };
+    var candles=[];
+    var winSize=36;
+    var offset=24;
+    var onlyStruct=false;
+    var dragging=false,dragX=0;
+    function buildSeries(){
+      var k=(selAtivo?selAtivo.value:'EURUSD')+'|'+(selTf?selTf.value:'H4');
+      var cfg=presets[k]||presets['EURUSD|H4'];
+      if(ctxBox) ctxBox.innerHTML='<strong>Contexto de mercado:</strong> '+cfg.ctx;
+      candles=[];
+      var p=cfg.base;
+      for(var i=0;i<60;i++){
+        var wave=Math.sin(i*0.42)*cfg.step*1.6+Math.cos(i*0.19)*cfg.step;
+        var o=p;
+        var c=o+wave+(i%3===0?cfg.step*0.4:-cfg.step*0.2);
+        var h=Math.max(o,c)+Math.abs(Math.sin(i+1))*cfg.step*0.9;
+        var l=Math.min(o,c)-Math.abs(Math.cos(i+2))*cfg.step*0.9;
+        candles.push({o:o,h:h,l:l,c:c,bos:(i===22||i===46)});
+        p=c;
+      }
+    }
+    function draw(){
+      var ctx=cvs.getContext('2d');
+      if(!ctx) return;
+      var w=cvs.width,h=cvs.height;
+      ctx.clearRect(0,0,w,h);
+      offset=Math.max(0,Math.min(candles.length-winSize,offset));
+      var slice=candles.slice(offset,offset+winSize);
+      if(viewInfo) viewInfo.textContent='Velas visíveis: '+(offset+1)+'–'+(offset+slice.length)+' de '+candles.length+' (Zoom '+(60/winSize).toFixed(1).replace('.',',')+'x)';
+      var hi=-Infinity,lo=Infinity;
+      slice.forEach(function(c){if(c.h>hi)hi=c.h;if(c.l<lo)lo=c.l;});
+      var pad=24,span=Math.max(0.0001,hi-lo);
+      function yOf(v){return h-pad-((v-lo)/span)*(h-2*pad);}
+      var cw=(w-2*pad)/slice.length;
+      if(!onlyStruct){
+        slice.forEach(function(c,i){
+          var x=pad+i*cw+cw*0.5;
+          var up=c.c>=c.o;
+          ctx.strokeStyle=up?'#10b981':'#ef4444';
+          ctx.fillStyle=up?'#10b981':'#ef4444';
+          ctx.beginPath();ctx.moveTo(x,yOf(c.h));ctx.lineTo(x,yOf(c.l));ctx.stroke();
+          var top=yOf(Math.max(c.o,c.c)),bot=yOf(Math.min(c.o,c.c));
+          ctx.fillRect(x-cw*0.32,top,Math.max(2,cw*0.64),Math.max(2,bot-top));
+        });
+      }
+      ctx.strokeStyle='#38bdf8';ctx.lineWidth=2.5;ctx.beginPath();
+      slice.forEach(function(c,i){
+        var x=pad+i*cw+cw*0.5;
+        var mid=(c.h+c.l)/2;
+        if(i===0) ctx.moveTo(x,yOf(mid)); else ctx.lineTo(x,yOf(mid));
+      });
+      ctx.stroke();
+      slice.forEach(function(c,i){
+        if(c.bos){
+          var x=pad+i*cw+cw*0.5,y=yOf(c.h);
+          ctx.strokeStyle='#eab308';ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(Math.min(w-pad,x+cw*6),y);ctx.stroke();ctx.setLineDash([]);
+          ctx.fillStyle='#eab308';ctx.font='bold 11px sans-serif';ctx.fillText('BOS',x+4,Math.max(14,y-4));
+        }
+      });
+    }
+    if(selAtivo) selAtivo.addEventListener('change',function(){buildSeries();draw();});
+    if(selTf) selTf.addEventListener('change',function(){buildSeries();draw();});
+    if(btnEst) btnEst.addEventListener('click',function(){onlyStruct=!onlyStruct;btnEst.setAttribute('aria-pressed',String(onlyStruct));btnEst.textContent=onlyStruct?'Só estrutura (ativo)':'Só estrutura';draw();});
+    var zIn=document.getElementById('g1_zoom_in'),zOut=document.getElementById('g1_zoom_out'),pL=document.getElementById('g1_pan_left'),pR=document.getElementById('g1_pan_right'),zRst=document.getElementById('g1_zoom_reset');
+    if(zIn) zIn.addEventListener('click',function(){winSize=Math.max(12,winSize-6);draw();});
+    if(zOut) zOut.addEventListener('click',function(){winSize=Math.min(60,winSize+6);draw();});
+    if(pL) pL.addEventListener('click',function(){offset=Math.max(0,offset-5);draw();});
+    if(pR) pR.addEventListener('click',function(){offset=Math.min(60-winSize,offset+5);draw();});
+    if(zRst) zRst.addEventListener('click',function(){winSize=36;offset=24;draw();});
+    cvs.addEventListener('wheel',function(e){e.preventDefault();winSize=e.deltaY<0?Math.max(12,winSize-4):Math.min(60,winSize+4);draw();},{passive:false});
+    cvs.addEventListener('mousedown',function(e){dragging=true;dragX=e.clientX;cvs.style.cursor='grabbing';});
+    window.addEventListener('mouseup',function(){dragging=false;cvs.style.cursor='grab';});
+    window.addEventListener('mousemove',function(e){if(!dragging)return;var dx=e.clientX-dragX;if(Math.abs(dx)>14){offset+=dx>0?-1:1;dragX=e.clientX;draw();}});
+    buildSeries();draw();
+  }
+  document.addEventListener('DOMContentLoaded',initGuia1Estrutura);
+})();
