@@ -68,3 +68,28 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initAtlasCards);
 })();
+
+(function(){
+  var KEY='atlas_prefs_v21';
+  window.AtlasPrefs={
+    key:KEY,
+    load:function(){try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return {};}},
+    save:function(patch){var cur=this.load();for(var k in patch){if(Object.prototype.hasOwnProperty.call(patch,k))cur[k]=patch[k];}localStorage.setItem(KEY,JSON.stringify(cur));return cur;},
+    clear:function(){Object.keys(localStorage).forEach(function(k){if(k===KEY||k.indexOf('atlas_')===0)localStorage.removeItem(k);});location.reload();}
+  };
+  document.addEventListener('DOMContentLoaded',function(){
+    var hdr=document.getElementById('atlas_header_v21');
+    if(hdr && !document.getElementById('btn_limpar_prefs')){
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.id='btn_limpar_prefs';
+      btn.textContent='Limpar preferências';
+      btn.setAttribute('aria-label','Limpar preferências');
+      btn.style.cssText='padding:4px 10px;font-size:.8rem;cursor:pointer';
+      btn.addEventListener('click',function(){window.AtlasPrefs.clear();});
+      hdr.appendChild(btn);
+    }
+    var st=window.AtlasPrefs.load();
+    if(st.highContrast) document.body.classList.add('high-contrast');
+  });
+})();
