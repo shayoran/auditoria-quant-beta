@@ -328,3 +328,123 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initGuia4Diario);
 })();
+
+(function(){
+  function initGuia4Avancado(){
+    var cvs=document.getElementById('g4_equity_cvs');
+    var tbIn=document.getElementById('g4_tbody_inline');
+    if(!cvs||!tbIn) return;
+    var data=[
+      {data:'2026-11-18',conta:'FTMO-01',ativo:'XAUUSD',r:1.50,eur:52.50,tags:'#NY-Open #H4-H1'},
+      {data:'2026-11-19',conta:'FTMO-01',ativo:'US100',r:-1.00,eur:-35.00,tags:'#Stop-Tecnico'},
+      {data:'2026-11-20',conta:'FTMO-02',ativo:'EURUSD',r:1.80,eur:63.00,tags:'#NY-Open #A+'},
+      {data:'2026-11-21',conta:'FTMO-02',ativo:'BTCUSDT',r:-1.00,eur:-35.00,tags:'#Volatilidade'},
+      {data:'2026-11-22',conta:'FTMO-03',ativo:'XAUUSD',r:1.40,eur:49.00,tags:'#H4-H1 #A+'},
+      {data:'2026-11-23',conta:'FTMO-03',ativo:'US100',r:1.50,eur:52.50,tags:'#NY-Open'}
+    ];
+    var activeTag='';
+    var csvParsed=[];
+    function drawEquity(){
+      var ctx=cvs.getContext('2d');
+      if(!ctx) return;
+      var w=cvs.width,h=cvs.height;
+      ctx.clearRect(0,0,w,h);
+      var acc=0,pts=[0];
+      data.forEach(function(x){acc+=Number(x.eur)||0;pts.push(acc);});
+      var badge=document.getElementById('g4_eq_badge');
+      if(badge) badge.textContent='Curva acumulada: '+(acc>=0?'+':'')+acc.toFixed(2).replace('.',',')+' EUR';
+      var minV=Math.min.apply(null,pts),maxV=Math.max.apply(null,pts);
+      if(maxV===minV){maxV+=10;minV-=10;}
+      var pad=24;
+      var yZero=h-pad-((0-minV)/(maxV-minV))*(h-2*pad);
+      ctx.strokeStyle='#334155';ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pad,yZero);ctx.lineTo(w-pad,yZero);ctx.stroke();ctx.setLineDash([]);
+      ctx.strokeStyle=acc>=0?'#10b981':'#ef4444';ctx.lineWidth=3;ctx.beginPath();
+      pts.forEach(function(v,i){
+        var x=pad+(i/Math.max(1,pts.length-1))*(w-2*pad);
+        var y=h-pad-((v-minV)/(maxV-minV))*(h-2*pad);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.stroke();
+      pts.forEach(function(v,i){
+        var x=pad+(i/Math.max(1,pts.length-1))*(w-2*pad);
+        var y=h-pad-((v-minV)/(maxV-minV))*(h-2*pad);
+        ctx.fillStyle='#38bdf8';ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+      });
+    }
+    function renderInline(){
+      var tagsBar=document.getElementById('g4_tags_bar');
+      if(tagsBar){
+        var counts={};
+        data.forEach(function(row){String(row.tags||'').split(/\s+/).filter(Boolean).forEach(function(tg){counts[tg]=(counts[tg]||0)+1;});});
+        var html='<button type="button" data-tag-pick="" aria-pressed="'+String(activeTag==='')+'">Todas as tags ('+data.length+')</button>';
+        Object.keys(counts).forEach(function(tg){
+          html+='<button type="button" data-tag-pick="'+tg+'" aria-pressed="'+String(activeTag===tg)+'">'+tg+' ('+counts[tg]+')</button>';
+        });
+        tagsBar.innerHTML=html;
+        tagsBar.querySelectorAll('[data-tag-pick]').forEach(function(b){
+          b.addEventListener('click',function(){activeTag=b.getAttribute('data-tag-pick');renderInline();});
+        });
+      }
+      var filtered=activeTag?data.filter(function(r){return String(r.tags||'').indexOf(activeTag)!==-1;}):data;
+      tbIn.innerHTML=filtered.map(function(row){
+        var idx=data.indexOf(row);
+        return '<tr style="border-bottom:1px solid #1e293b"><td style="padding:6px"><input type="text" data-in-idx="'+idx+'" data-in-k="data" value="'+row.data+'" aria-label="Editar data" style="width:105px"></td><td style="padding:6px"><input type="text" data-in-idx="'+idx+'" data-in-k="conta" value="'+row.conta+'" aria-label="Editar conta" style="width:85px"></td><td style="padding:6px"><input type="text" data-in-idx="'+idx+'" data-in-k="ativo" value="'+row.ativo+'" aria-label="Editar ativo" style="width:80px"></td><td style="padding:6px"><input type="number" step="0.1" data-in-idx="'+idx+'" data-in-k="r" value="'+row.r+'" aria-label="Editar R" style="width:65px"></td><td style="padding:6px"><input type="number" step="1" data-in-idx="'+idx+'" data-in-k="eur" value="'+row.eur+'" aria-label="Editar EUR" style="width:75px"></td><td style="padding:6px"><input type="text" data-in-idx="'+idx+'" data-in-k="tags" value="'+row.tags+'" aria-label="Editar tags" style="width:150px"></td></tr>';
+      }).join('');
+      tbIn.querySelectorAll('[data-in-idx]').forEach(function(inp){
+        inp.addEventListener('change',function(){
+          var i=parseInt(inp.getAttribute('data-in-idx'),10);
+          var k=inp.getAttribute('data-in-k');
+          data[i][k]=(k==='r'||k==='eur')?(parseFloat(inp.value)||0):inp.value;
+          drawEquity();
+          renderInline();
+        });
+      });
+      drawEquity();
+    }
+    function populateCols(headers){
+      ['map_col_data','map_col_conta','map_col_ativo','map_col_r','map_col_eur'].forEach(function(id,defIdx){
+        var sel=document.getElementById(id);
+        if(!sel) return;
+        sel.innerHTML=headers.map(function(h,i){return '<option value="'+i+'"'+(i===Math.min(defIdx,headers.length-1)?' selected':'')+'>Col '+(i+1)+': '+h+'</option>';}).join('');
+      });
+    }
+    var btnDemoMap=document.getElementById('g4_csv_demo_map');
+    if(btnDemoMap){
+      btnDemoMap.addEventListener('click',function(){
+        csvParsed=[['Open Time','Account','Symbol','R_Net','Profit_EUR'],['2026-11-24','FTMO-04','XAUUSD','1.60','56.00']];
+        populateCols(csvParsed[0]);
+      });
+    }
+    var fileInp=document.getElementById('g4_csv_file');
+    if(fileInp){
+      fileInp.addEventListener('change',function(ev){
+        var f=ev.target.files&&ev.target.files[0];
+        if(!f) return;
+        var rd=new FileReader();
+        rd.onload=function(){
+          var lines=String(rd.result||'').split(/\r?\n/).filter(function(l){return l.trim().length>0;});
+          csvParsed=lines.map(function(l){return l.split(/[,;]/);});
+          if(csvParsed.length>0) populateCols(csvParsed[0]);
+        };
+        rd.readAsText(f);
+      });
+    }
+    var btnApply=document.getElementById('g4_csv_aplicar');
+    if(btnApply){
+      btnApply.addEventListener('click',function(){
+        if(csvParsed.length<2) return;
+        var iD=parseInt(document.getElementById('map_col_data').value,10)||0;
+        var iC=parseInt(document.getElementById('map_col_conta').value,10)||1;
+        var iA=parseInt(document.getElementById('map_col_ativo').value,10)||2;
+        var iR=parseInt(document.getElementById('map_col_r').value,10)||3;
+        var iE=parseInt(document.getElementById('map_col_eur').value,10)||4;
+        csvParsed.slice(1).forEach(function(r){
+          data.push({data:r[iD]||'2026-11-24',conta:r[iC]||'FTMO',ativo:r[iA]||'XAUUSD',r:parseFloat(r[iR])||0,eur:parseFloat(r[iE])||0,tags:'#CSV-Import'});
+        });
+        renderInline();
+      });
+    }
+    renderInline();
+  }
+  document.addEventListener('DOMContentLoaded',initGuia4Avancado);
+})();
