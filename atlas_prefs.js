@@ -660,3 +660,105 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initGuia1Estrutura);
 })();
+
+(function(){
+  function initCustomChecklistAndI18n(){
+    var listEl=document.getElementById('g3_custom_list');
+    var inpTitle=document.getElementById('g3_custom_inp');
+    var inpDesc=document.getElementById('g3_custom_desc');
+    var btnAdd=document.getElementById('g3_custom_add');
+    function refreshG3Badge(){
+      var chks=document.querySelectorAll('[data-g3-chk]');
+      var badge=document.getElementById('g3_status_badge');
+      if(!chks.length||!badge) return;
+      var n=0;chks.forEach(function(c){if(c.checked)n++;});
+      var ok=(n===chks.length);
+      var isEn=(window.AtlasPrefs&&window.AtlasPrefs.load().lang==='en');
+      badge.textContent=isEn?(n+' / '+chks.length+' confirmed — '+(ok?'READY':'LOCKED')):(n+' / '+chks.length+' confirmados — '+(ok?'LIBERADO':'BLOQUEADO'));
+      badge.style.borderColor=ok?'#10b981':'#ef4444';
+    }
+    function renderCustomList(){
+      if(!listEl) return;
+      var st=(window.AtlasPrefs&&window.AtlasPrefs.load())||{};
+      var items=Array.isArray(st.g3Custom)?st.g3Custom:[];
+      listEl.innerHTML=items.map(function(it,idx){
+        return '<div class="g3-chk-item"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><label class="g3-chk-row"><input type="checkbox" class="g3-chk-big" data-g3-chk data-custom-idx="'+idx+'"'+(it.done?' checked':'')+'><span>'+it.title+'</span></label><button type="button" data-custom-del="'+idx+'" aria-label="Remover critério" style="padding:2px 8px;font-size:.78rem">Remover</button></div>'+(it.desc?'<details class="g3-chk-det"><summary style="cursor:pointer">Ver explicação do critério</summary><p style="margin:6px 0 0 0">'+it.desc+'</p></details>':'')+'</div>';
+      }).join('');
+      listEl.querySelectorAll('[data-custom-idx]').forEach(function(c){
+        c.addEventListener('change',function(){
+          var i=parseInt(c.getAttribute('data-custom-idx'),10);
+          items[i].done=c.checked;
+          if(window.AtlasPrefs) window.AtlasPrefs.save({g3Custom:items});
+          refreshG3Badge();
+        });
+      });
+      listEl.querySelectorAll('[data-custom-del]').forEach(function(b){
+        b.addEventListener('click',function(){
+          var i=parseInt(b.getAttribute('data-custom-del'),10);
+          items.splice(i,1);
+          if(window.AtlasPrefs) window.AtlasPrefs.save({g3Custom:items});
+          renderCustomList();refreshG3Badge();
+        });
+      });
+      refreshG3Badge();
+    }
+    if(btnAdd&&inpTitle){
+      btnAdd.addEventListener('click',function(){
+        var title=inpTitle.value.trim();
+        if(!title) return;
+        var st=(window.AtlasPrefs&&window.AtlasPrefs.load())||{};
+        var items=Array.isArray(st.g3Custom)?st.g3Custom:[];
+        items.push({title:title,desc:(inpDesc?inpDesc.value.trim():''),done:false});
+        if(window.AtlasPrefs) window.AtlasPrefs.save({g3Custom:items});
+        inpTitle.value='';if(inpDesc)inpDesc.value='';
+        renderCustomList();
+      });
+    }
+    renderCustomList();
+    var dictEn={
+      'btn_limpar_prefs':'Clear preferences',
+      'btn_so_percentis':'Percentiles only',
+      'btn_reexec_mc':'New seed',
+      'g1_btn_so_estrutura':'Structure only',
+      'g3_custom_add':'+ Add criterion',
+      'g4_btn_exportar':'Export CSV now',
+      'g4_btn_exp_png':'Export Image (PNG)',
+      'g4_btn_exp_pdf':'Export PDF'
+    };
+    function applyLang(lang){
+      document.documentElement.lang=(lang==='en'?'en':'pt-PT');
+      var btnLang=document.getElementById('btn_lang_toggle');
+      if(btnLang) btnLang.textContent=(lang==='en'?'Lang: EN (PT)':'Idioma: PT (EN)');
+      if(lang==='en'){
+        Object.keys(dictEn).forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=dictEn[id];});
+        document.querySelectorAll('#atlas_header_v21 a').forEach(function(a){
+          var h=a.getAttribute('href')||'';
+          if(h.indexOf('index.html')!==-1) a.textContent='Monte Carlo';
+          if(h.indexOf('guia_1.html')!==-1) a.textContent='Guide 1: Empirical';
+          if(h.indexOf('guia_2.html')!==-1) a.textContent='Guide 2: Risk';
+          if(h.indexOf('guia_3.html')!==-1) a.textContent='Guide 3: Checklist';
+          if(h.indexOf('guia_4.html')!==-1) a.textContent='Guide 4: Journal';
+          if(h.indexOf('privacidade.html')!==-1) a.textContent='Privacy';
+        });
+      }
+      refreshG3Badge();
+    }
+    var hdr=document.getElementById('atlas_header_v21');
+    if(hdr&&!document.getElementById('btn_lang_toggle')){
+      var bLang=document.createElement('button');
+      bLang.type='button';bLang.id='btn_lang_toggle';
+      bLang.setAttribute('aria-label','Alternar idioma PT / EN');
+      bLang.style.cssText='padding:4px 10px;font-size:.8rem;cursor:pointer';
+      bLang.addEventListener('click',function(){
+        var cur=(window.AtlasPrefs&&window.AtlasPrefs.load().lang)||'pt';
+        var nxt=(cur==='en'?'pt':'en');
+        if(window.AtlasPrefs) window.AtlasPrefs.save({lang:nxt});
+        if(nxt==='pt') location.reload(); else applyLang('en');
+      });
+      hdr.appendChild(bLang);
+    }
+    var savedLang=(window.AtlasPrefs&&window.AtlasPrefs.load().lang)||'pt';
+    applyLang(savedLang);
+  }
+  document.addEventListener('DOMContentLoaded',initCustomChecklistAndI18n);
+})();
