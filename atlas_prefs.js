@@ -236,3 +236,95 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initGuia3Checklist);
 })();
+
+(function(){
+  function initGuia4Diario(){
+    var tbody=document.getElementById('g4_tbody');
+    if(!tbody) return;
+    var rows=[
+      {data:'2026-11-18',conta:'FTMO-01',ativo:'XAUUSD',r:1.50,eur:52.50,exported:true},
+      {data:'2026-11-19',conta:'FTMO-01',ativo:'US100',r:-1.00,eur:-35.00,exported:true},
+      {data:'2026-11-20',conta:'FTMO-02',ativo:'EURUSD',r:1.80,eur:63.00,exported:true},
+      {data:'2026-11-21',conta:'FTMO-02',ativo:'BTCUSDT',r:-1.00,eur:-35.00,exported:false},
+      {data:'2026-11-22',conta:'FTMO-03',ativo:'XAUUSD',r:1.40,eur:49.00,exported:false},
+      {data:'2026-11-23',conta:'FTMO-03',ativo:'US100',r:1.50,eur:52.50,exported:false}
+    ];
+    var filter='all';
+    var sortKey='data';
+    var sortAsc=false;
+    var totVivo=document.getElementById('g4_tot_vivo');
+    var totNet=document.getElementById('g4_tot_net');
+    var avExp=document.getElementById('g4_aviso_exportar');
+    var btnExp=document.getElementById('g4_btn_exportar');
+    function render(){
+      var nAll=rows.length;
+      var nWin=rows.filter(function(x){return x.r>0;}).length;
+      var nLoss=rows.filter(function(x){return x.r<0;}).length;
+      document.querySelectorAll('[data-g4-filter]').forEach(function(b){
+        var f=b.getAttribute('data-g4-filter');
+        b.setAttribute('aria-pressed',String(f===filter));
+        if(f==='all') b.textContent='Todos ('+nAll+')';
+        if(f==='win') b.textContent='Ganhos ('+nWin+')';
+        if(f==='loss') b.textContent='Perdas ('+nLoss+')';
+      });
+      var pend=rows.filter(function(x){return !x.exported;}).length;
+      if(avExp){
+        if(pend>0){
+          avExp.style.borderColor='#eab308';
+          avExp.innerHTML='<strong>Aviso de registos por exportar:</strong> tens <strong>'+pend+'</strong> registos por exportar em CSV.';
+        } else {
+          avExp.style.borderColor='#10b981';
+          avExp.textContent='Backup em dia: 0 registos por exportar.';
+        }
+      }
+      var list=rows.filter(function(x){
+        if(filter==='win') return x.r>0;
+        if(filter==='loss') return x.r<0;
+        return true;
+      }).slice().sort(function(a,b){
+        var va=a[sortKey],vb=b[sortKey];
+        if(typeof va==='string') return sortAsc?va.localeCompare(vb):vb.localeCompare(va);
+        return sortAsc?(va-vb):(vb-va);
+      });
+      var n=list.length;
+      var wins=list.filter(function(x){return x.r>0;});
+      var losses=list.filter(function(x){return x.r<0;});
+      var wr=n?((wins.length/n)*100):0;
+      var avgW=wins.length?(wins.reduce(function(s,x){return s+x.r;},0)/wins.length):0;
+      var avgL=losses.length?Math.abs(losses.reduce(function(s,x){return s+x.r;},0)/losses.length):1;
+      var payoff=avgL>0?(avgW/avgL):0;
+      var sumEur=list.reduce(function(s,x){return s+x.eur;},0);
+      var sumR=list.reduce(function(s,x){return s+x.r;},0);
+      var ev=n?(sumR/n):0;
+      if(totVivo) totVivo.textContent='Win Rate: '+wr.toFixed(1).replace('.',',')+'% | Payoff: '+payoff.toFixed(2).replace('.',',')+' | n = '+n;
+      if(totNet) totNet.textContent=(sumEur>=0?'+':'')+sumEur.toFixed(2).replace('.',',')+' EUR ('+(ev>=0?'+':'')+ev.toFixed(2).replace('.',',')+' R / trade)';
+      tbody.innerHTML=list.map(function(x){
+        return '<tr style="border-bottom:1px solid #1e293b"><td style="padding:8px">'+x.data+'</td><td style="padding:8px">'+x.conta+'</td><td style="padding:8px">'+x.ativo+'</td><td style="padding:8px">'+(x.r>=0?'+':'')+x.r.toFixed(2).replace('.',',')+' R</td><td style="padding:8px">'+(x.eur>=0?'+':'')+x.eur.toFixed(2).replace('.',',')+' EUR</td></tr>';
+      }).join('');
+    }
+    document.querySelectorAll('[data-g4-filter]').forEach(function(b){
+      b.addEventListener('click',function(){filter=b.getAttribute('data-g4-filter');render();});
+    });
+    document.querySelectorAll('[data-g4-sort]').forEach(function(b){
+      b.addEventListener('click',function(){
+        var k=b.getAttribute('data-g4-sort');
+        if(sortKey===k) sortAsc=!sortAsc; else {sortKey=k;sortAsc=true;}
+        render();
+      });
+    });
+    if(btnExp){
+      btnExp.addEventListener('click',function(){
+        var csv='Data,Conta,Ativo,R,EUR\n'+rows.map(function(x){return [x.data,x.conta,x.ativo,x.r,x.eur].join(',');}).join('\n');
+        var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+        var a=document.createElement('a');
+        a.href=URL.createObjectURL(blob);
+        a.download='diario_auditoria_quant.csv';
+        a.click();
+        rows.forEach(function(x){x.exported=true;});
+        render();
+      });
+    }
+    render();
+  }
+  document.addEventListener('DOMContentLoaded',initGuia4Diario);
+})();
