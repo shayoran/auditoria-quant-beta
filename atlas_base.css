@@ -17,3 +17,11 @@
 .g1-panel-neg{border-left:4px solid #ef4444}
 .g1-legend-fixed{position:sticky;bottom:8px;z-index:10;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 12px;border-radius:8px;border:1px solid #334155;background:rgba(15,23,42,.96);font-size:.82rem;margin-top:10px}
 .g1-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+
+/* Guia 3 Checklist Pre-Sessao v2.1 (itens 41,43,50) */
+.g3-chk-item{padding:12px;border:1px solid #334155;border-radius:10px;background:#020617;margin-bottom:10px}
+.g3-chk-row{display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:600;font-size:.98rem}
+.g3-chk-big{width:24px;height:24px;min-width:24px;accent-color:#10b981;cursor:pointer}
+.g3-chk-det{margin-top:8px;padding-left:36px;font-size:.875rem;color:#94a3b8}
+.g3-ext-links{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.g3-ext-link{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid #334155;background:#020617;font-size:.85rem;font-weight:600;text-decoration:none}

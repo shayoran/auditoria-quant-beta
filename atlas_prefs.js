@@ -218,3 +218,21 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
   }
   document.addEventListener('DOMContentLoaded',initGuia2Risco);
 })();
+
+(function(){
+  function initGuia3Checklist(){
+    var chks=document.querySelectorAll('[data-g3-chk]');
+    var badge=document.getElementById('g3_status_badge');
+    if(!chks.length||!badge) return;
+    function update(){
+      var n=0;
+      chks.forEach(function(c){if(c.checked)n++;});
+      var ok=(n===chks.length);
+      badge.textContent=n+' / '+chks.length+' confirmados — '+(ok?'LIBERADO':'BLOQUEADO');
+      badge.style.borderColor=ok?'#10b981':'#ef4444';
+    }
+    chks.forEach(function(c){c.addEventListener('change',update);});
+    update();
+  }
+  document.addEventListener('DOMContentLoaded',initGuia3Checklist);
+})();
