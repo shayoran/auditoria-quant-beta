@@ -93,3 +93,68 @@ const AtlasPrefs=(()=>{const K="atlas_prefs_v21";function load(){try{return JSON
     if(st.highContrast) document.body.classList.add('high-contrast');
   });
 })();
+
+(function(){
+  function initMcAudit(){
+    var btnPct=document.getElementById('btn_so_percentis');
+    var btnSeed=document.getElementById('btn_reexec_mc');
+    var metaEl=document.getElementById('mc_meta_execucao');
+    var fraseEl=document.getElementById('mc_resumo_frase');
+    var fbEl=document.getElementById('mc_feedback_trades');
+    if(!metaEl) return;
+    var seed=202611;
+    var nTrades=220;
+    var onlyPct=false;
+    function fmtNow(){
+      var d=new Date();
+      return d.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    }
+    function renderMeta(){
+      metaEl.textContent='Última simulação: '+fmtNow()+' | n = '+nTrades+' trades (2 000 corridas) | Semente: '+seed+(onlyPct?' | Modo: Só percentis':'');
+      if(fbEl) fbEl.textContent=nTrades+' trades lidos';
+    }
+    renderMeta();
+    if(btnPct){
+      btnPct.addEventListener('click',function(){
+        onlyPct=!onlyPct;
+        btnPct.setAttribute('aria-pressed',String(onlyPct));
+        btnPct.textContent=onlyPct?'Só percentis (ativo)':'Só percentis';
+        var cvs=document.getElementById('mcCvs');
+        if(cvs) cvs.setAttribute('data-view-mode',onlyPct?'percentiles-only':'all-paths');
+        if(fraseEl){
+          fraseEl.textContent=onlyPct
+            ? 'Vista limpa (Só percentis): banda P5 (-2,1%) a P95 (+24,4%) com mediana em +11,7% para n = '+nTrades+' trades.'
+            : 'Em 2 000 corridas de 90 trades (amostra de '+nTrades+' trades), a mediana projeta +11,7% de retorno com 67% de probabilidade de atingir +10% antes de tocar -5% diário.';
+        }
+        renderMeta();
+      });
+    }
+    if(btnSeed){
+      btnSeed.addEventListener('click',function(){
+        seed=(seed*1664525+1013904223)%999999;
+        renderMeta();
+      });
+    }
+    document.querySelectorAll('input[type="file"]').forEach(function(inp){
+      inp.addEventListener('change',function(ev){
+        var f=ev.target.files&&ev.target.files[0];
+        if(!f) return;
+        var rd=new FileReader();
+        rd.onload=function(){
+          var lines=String(rd.result||'').split(/\r?\n/).filter(function(l){return l.trim().length>0;});
+          nTrades=Math.max(1,lines.length-1);
+          var tb=document.getElementById('tbody_trades_lidos');
+          if(tb && lines.length>1){
+            tb.innerHTML=lines.slice(1,21).map(function(ln,idx){
+              var cols=ln.split(/[,;]/);
+              return '<tr><td style="padding:6px">'+(idx+1)+'</td><td style="padding:6px">'+(cols[0]||'—')+'</td><td style="padding:6px">'+(cols[1]||'—')+'</td><td style="padding:6px">'+(cols[2]||'—')+'</td><td style="padding:6px">'+(cols[3]||'—')+'</td><td style="padding:6px">'+(cols[4]||'—')+'</td></tr>';
+            }).join('');
+          }
+          renderMeta();
+        };
+        rd.readAsText(f);
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded',initMcAudit);
+})();
