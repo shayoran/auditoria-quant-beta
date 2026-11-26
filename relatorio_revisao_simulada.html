@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão do Ciclo · 2024-01-08 a 2026-11-04</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:#0b1120; color:#e2e8f0; margin:0; padding:24px; line-height:1.5; }
+  .container { max-width: 920px; margin: 0 auto; }
+  h1 { font-size: 1.55rem; color: #f8fafc; margin-bottom: 4px; }
+  h2 { font-size: 1.15rem; margin-top: 28px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; color: #38bdf8; }
+  .muted { color: #94a3b8; font-size: 0.9rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 14px 0; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 14px; }
+  .card .lbl { font-size: 0.78rem; color: #94a3b8; text-transform: uppercase; }
+  .card .val { font-size: 1.05rem; font-weight: 700; margin-top: 4px; color: #f8fafc; }
+  .summary-box { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+  .diag-box { background: #1e293b; border-left: 4px solid #38bdf8; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px; font-size: 0.92rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+  th { color: #94a3b8; font-weight: 600; }
+  .disclaimer { margin-top: 32px; padding: 12px; background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; font-size: 0.8rem; color: #64748b; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Revisão do Ciclo Mensal</h1>
+  <div class="muted">Período: 2024-01-08 a 2026-11-04</div>
+
+  <div class="summary-box">
+    <p>Os teus dados mostram 218 trade(s) fechado(s) neste ciclo com foco em Duração de vencedores e perdedores.</p><p>Na regra R1 (Perda máxima por dia), os teus dados mostram 189 dia(s) em conformidade num total de 189 dia(s) com atividade (100.0%), com 0 violação(ões) registada(s).</p><p>Face ao ciclo anterior, os teus dados mostram uma queda pico-vale de 16.95% (antes 9.83%) e uma pior sequência de 13 perda(s) seguida(s) (antes 14).</p><p>Estes valores servem de base para decidir se manténs a regra atual, ajustas os parâmetros ou escolhes um novo foco.</p>
+  </div>
+
+  <h2>1 · Cumprimento da Regra Pessoal</h2>
+  
+        <div class="grid-4">
+          <div class="card"><div class="lbl">Regra</div><div class="val">R1 · Perda máxima por dia</div></div>
+          <div class="card"><div class="lbl">Dias Conformes</div><div class="val">189 / 189 (100.0%)</div></div>
+          
+        </div>
+        <table>
+          <tr><th>Trade</th><th>Data/Hora Local</th><th>Registo</th><th>PnL</th></tr>
+          <tr><td colspan="4" class="muted">Nenhuma violação registada neste ciclo.</td></tr>
+        </table>
+        
+
+  <h2>2 · O que Mudou (Comparação Descritiva)</h2>
+  <table>
+    <tr><th>Indicador</th><th>Ciclo Anterior</th><th>Ciclo Atual</th><th>Amostra</th></tr>
+    <tr><td>Número de trades (amostra)</td><td>217</td><td>218</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Profit Factor</td><td>1.30</td><td>1.45</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Taxa de acerto</td><td>31.34%</td><td>28.44%</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Payoff</td><td>2.84</td><td>3.64</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Perda máxima num dia (% capital)</td><td>1.71%</td><td>1.81%</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Pior sequência de perdas</td><td>14 trades</td><td>13 trades</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Custos (% do PnL bruto total)</td><td>43.96%</td><td>26.40%</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr><tr><td>Queda pico-vale (% capital)</td><td>9.83%</td><td>16.95%</td><td class="muted">Anterior: n=217 · Atual: n=218</td></tr>
+  </table>
+
+  
+            <h2>Pontos de Atenção (Diagnóstico Estatístico)</h2>
+            <!-- ci_adj -->
+            <p class="muted">Comparações realizadas: 6 (intervalo ajustado a 99.2%). Mostrados no máximo 3 pontos com verificação de amostra e estabilidade.</p>
+            <div class="diag-box"><strong>[Pista] Duração de vencedores e perdedores:</strong> Os teus dados mostram que a mediana de duração dos trades vencedores é de 202.00 h (n = 62), contra 54.00 h (n = 156) nos perdedores (em estilos de seguimento de tendência é normal os vencedores durarem mais). O intervalo ajustado da diferença é de +111.85 h a +214.00 h. O intervalo ajustado não inclui o zero.</div>
+            
+
+  <div class="disclaimer">
+    <strong>Aviso Metodológico:</strong> Este relatório descreve exclusivamente dados históricos e o cumprimento de regras definidas pelo próprio utilizador. Não constitui aconselhamento financeiro nem recomendação de operação.
+  </div>
+</div>
+</body>
+</html>

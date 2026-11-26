@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Auditoria de Estratégia</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:#0b1120; color:#e2e8f0; margin:0; padding:24px; line-height:1.5; }
+  .container { max-width: 920px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin-bottom: 4px; color: #f8fafc; }
+  h2 { font-size: 1.15rem; margin-top: 28px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; color: #38bdf8; }
+  .muted { color: #94a3b8; font-size: 0.9rem; }
+  .grid-6 { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 12px; margin: 18px 0; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 14px; }
+  .card .lbl { font-size: 0.78rem; color: #94a3b8; text-transform: uppercase; }
+  .card .val { font-size: 1.25rem; font-weight: 700; margin-top: 4px; color: #f8fafc; }
+  .alert-box { background: #1e1b18; border-left: 4px solid #f59e0b; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px; font-size: 0.92rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+  th { color: #94a3b8; font-weight: 600; }
+  .share-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1px solid #38bdf8; border-radius: 10px; padding: 18px; margin-top: 24px; }
+  .share-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+  .disclaimer { margin-top: 32px; padding: 12px; background: #0f172a; border: 1px solid #1e293b; border-radius: 6px; font-size: 0.8rem; color: #64748b; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Relatório de Auditoria de Estratégia</h1>
+  <div class="muted">Período: Sem operações fechadas · Capital de referência: 10,000.00 EUR · Motor v0.1.1</div>
+
+  <div class="grid-6">
+    <div class="card"><div class="lbl">Trades</div><div class="val">0</div></div>
+    <div class="card"><div class="lbl">PnL Líquido</div><div class="val">+0.00 EUR</div></div>
+    <div class="card"><div class="lbl">Profit Factor</div><div class="val">0.00</div></div>
+    <div class="card"><div class="lbl">Taxa Acerto</div><div class="val">0.0%</div></div>
+    <div class="card"><div class="lbl">Payoff</div><div class="val">0.00</div></div>
+    <div class="card"><div class="lbl">Queda Máx.</div><div class="val">0.0%</div></div>
+  </div>
+
+  
+        <svg viewBox="0 0 760 180" style="width:100%;height:auto;background:#0f172a;border-radius:8px;margin-top:12px;">
+          <polyline fill="none" stroke="#38bdf8" stroke-width="2.5" points="16.0,16.0 36.8,16.0 57.6,16.0 78.4,16.0 99.2,16.0 120.0,16.0 140.8,16.0 161.6,16.0 182.4,16.0 203.2,16.0 224.0,16.0 244.8,16.0 265.6,16.0 286.4,16.0 307.2,81.8 328.0,81.8 348.8,164.0 369.6,164.0 390.4,164.0 411.2,164.0 432.0,164.0 452.8,164.0 473.6,164.0 494.4,164.0 515.2,164.0 536.0,164.0 556.8,164.0 577.6,164.0 598.4,164.0 619.2,164.0 640.0,164.0 660.8,164.0 681.6,164.0 702.4,164.0 723.2,164.0 744.0,164.0" />
+        </svg>
+        
+
+  <h2>Alertas Descritivos</h2>
+  <p class="muted">Sinais estatísticos objetivos sobre a distribuição dos trades (sem recomendações).</p>
+  <div class="alert-box"><strong>Sem trades fechados:</strong> O ficheiro não contém operações fechadas para auditar (posições ainda abertas ou histórico vazio).</div>
+
+  <h2>A & B · Expectativa e Custos Reais</h2>
+  <p class="muted">Quanto custa operar a estratégia e qual o resultado médio líquido por operação.</p>
+  <table>
+    <tr><th>Métrica</th><th>Valor</th></tr>
+    <tr><td>Expectancy líquida por trade</td><td>+0.00 EUR</td></tr>
+    <tr><td>Comissões totais</td><td>-0.72 EUR</td></tr>
+    <tr><td>Swap acumulado</td><td>+0.00 EUR</td></tr>
+    <tr><td>Peso total dos custos no lucro bruto</td><td>0.00% (média 0.00 EUR/trade)</td></tr>
+  </table>
+
+  <h2>C & D · Dependência de Poucos Trades e Sequências Negativas</h2>
+  <p class="muted">Avalia se o resultado sobrevive sem os melhores eventos e quantas perdas seguidas ocorrem.</p>
+  <table>
+    <tr><th>Cenário</th><th>Resultado</th></tr>
+    <tr><td>PnL sem o melhor trade (Top 1)</td><td>+0.00 EUR</td></tr>
+    <tr><td>PnL sem os 2 melhores trades (Top 2)</td><td>+0.00 EUR</td></tr>
+    <tr><td>PnL sem os 3 melhores trades (Top 3)</td><td>+0.00 EUR</td></tr>
+    <tr><td>Quota do lucro nos 5 melhores trades</td><td>0.0%</td></tr>
+    <tr><td>Pior sequência de perdas seguidas</td><td>0 trades (média 0.0)</td></tr>
+  </table>
+
+  <h2>E · Queda (Drawdown) e Janelas Móveis</h2>
+  <p class="muted">Mostra a pior queda pico-vale e o que acontece a quem inicia a estratégia numa data arbitrária.</p>
+  <table>
+    <tr><th>Métrica de Risco</th><th>Valor</th></tr>
+    <tr><td>Queda máxima pico-vale</td><td>0.00 EUR (0.00% inicial / 0.00% do pico)</td></tr>
+    <tr><td>Recovery Factor (PnL / Queda Máx.)</td><td>0.00</td></tr>
+    <tr><td>Pior dia fechado</td><td>+0.00 EUR (0.00% do capital inicial)</td></tr>
+  </table>
+  <table>
+    <tr><th>Janela</th><th>Amostras</th><th>Mediana DD</th><th>Percentil 90 DD</th><th>Pior DD</th></tr>
+    <tr><td colspan="5" class="muted">Histórico sem datas suficientes para janelas móveis de 42/56/90 dias.</td></tr>
+  </table>
+
+  <h2>F · Estabilidade por Ano, Ativo e Direção</h2>
+  <table>
+    <tr><th>Ano</th><th>Trades</th><th>Taxa Acerto</th><th>PnL Líquido</th></tr>
+    <tr><td colspan="4" class="muted">Sem dados fechados neste agrupamento.</td></tr>
+  </table>
+  <table>
+    <tr><th>Símbolo</th><th>Trades</th><th>Taxa Acerto</th><th>PnL Líquido</th></tr>
+    <tr><td colspan="4" class="muted">Sem dados fechados neste agrupamento.</td></tr>
+  </table>
+  <table>
+    <tr><th>Direção</th><th>Trades</th><th>Taxa Acerto</th><th>PnL Líquido</th></tr>
+    <tr><td>long</td><td>0</td><td>0.0%</td><td>+0.00 EUR</td></tr><tr><td>short</td><td>0</td><td>0.0%</td><td>+0.00 EUR</td></tr>
+  </table>
+
+  <div class="share-card">
+    <div class="lbl" style="color:#38bdf8;font-weight:700;">CARTÃO PARTILHÁVEL (SEM SALDOS ABSOLUTOS)</div>
+    <div class="share-grid">
+      <div><div class="lbl">Profit Factor</div><div class="val">0.00</div></div>
+      <div><div class="lbl">Queda Máx.</div><div class="val">0.0%</div></div>
+      <div><div class="lbl">PnL s/ Top 2</div><div class="val">+0.00 EUR</div></div>
+      <div><div class="lbl">Custos / Bruto</div><div class="val">0.0%</div></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Aviso Legal e Metodológico:</strong> Este relatório tem caráter estritamente descritivo e estatístico. Não constitui aconselhamento para investimento, recomendação personalizada ou sinal de compra/venda. O desempenho passado não garante resultados futuros. As quedas são calculadas sobre operações fechadas e podem subestimar a flutuação intradiária de posições abertas.
+  </div>
+</div>
+</body>
+</html>
